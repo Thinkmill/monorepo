@@ -39,6 +39,20 @@ The other significant reason to use multiple entrypoints that's more applicable 
 
 If your answer to these questions is mostly yes then having multiple entrypoints might make sense for your package.
 
+### Dependencies and Constraints
+
+A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes ten same version. To address this, we need to impose some constraints on the dependencies of packages.
+
+The two most significant rules are referred to as external and internal mismatches.
+
+An internal mismatch is when a workspace depends
+
+There are vague thoughts that it should be possible to partially disable external mismatch rules but we have not yet had a use case for it so we have not addressed it yet.
+
+This constraint was first introduced with Bolt. In Bolt, these constraints didn’t only exist to stop confusing errors but also to enable fast linking of packages because
+
+The current implementation of these constraints is Manypkg. It is very likely that this will be replaced with the constraints feature in Yarn 2 when it is stable.
+
 ### Building Packages
 
 > **Note**: Building packages is only necessary if packages are being published
