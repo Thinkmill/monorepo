@@ -1,6 +1,6 @@
 # Thinkmill Multi-package Repository Style Guide
 
-This style guide Thinkmill Monorepo style guide documents the standards for how monorepos should be setup at Thinkmill along with explaining the reasoning for our tooling and setup. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
+This style guide documents the standards for how monorepos should be setup at Thinkmill along with explaining the reasoning for our tooling and setup. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
 
 ## Reasoning behind multi-package repos
 
