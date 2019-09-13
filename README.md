@@ -1,6 +1,6 @@
 # Thinkmill Multi-package Repository Style Guide
 
-This style guide documents the standards for how monorepos should be setup at Thinkmill along with explaining the reasoning for our tooling and setup. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
+This style guide documents the standards for monorepos at Thinkmill along with explaining the reasoning for our decisions and tooling. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
 
 ## Reasoning behind multi-package repos
 
@@ -45,7 +45,7 @@ A common problem that has been encountered in monorepos is that duplicated packa
 
 The two most significant rules are referred to as external and internal mismatches.
 
-An internal mismatch is when a workspace depends
+An internal mismatch is when a workspace depends on another workspace but
 
 There are vague thoughts that it should be possible to partially disable external mismatch rules but we have not yet had a use case for it so we have not addressed it yet.
 
