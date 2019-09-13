@@ -2,6 +2,8 @@
 
 Important Note: This style guide is currently very WIP
 
+---
+
 This style guide documents the standards for monorepos at Thinkmill along with explaining the reasoning for our decisions and tooling. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
 
 ## Reasoning behind multi-package repos
