@@ -47,15 +47,69 @@ If your answer to these questions is mostly yes then having multiple entrypoints
 
 A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes ten same version. To address this, we need to impose some constraints on the dependencies of packages.
 
-The two most significant rules are referred to as external and internal mismatches.
+#### Constraints
 
-An internal mismatch is when a workspace depends on another workspace but
+##### External mismatch
 
-There are vague thoughts that it should be possible to partially disable external mismatch rules but we have not yet had a use case for it so we have not addressed it yet.
+The ranges for all dependencies(excluding `peerDependencies`) on external packages should exactly match(`===`). This is so that only a single version of an external package will be installed because having multiple versions of the same package can cause confusion and bundle size problems especially with libraries like React that require there to only be a single copy of the library. It's important to note that this check does not enforce that only a single version of an external package is installed, only that two versions of an external package will never be installed because they're specified as dependencies of internal packages.
 
-This constraint was first introduced with Bolt. In Bolt, these constraints didn’t only exist to stop confusing errors but also to enable fast linking of packages because
+###### How it's fixed
 
-The current implementation of these constraints is Manypkg. It is very likely that this will be replaced with the constraints feature in Yarn 2 when it is stable.
+The highest range of the dependency is set as the range at every non-peer dependency place it is depended on.
+
+##### Internal mismatch
+
+The ranges for all dependencies(excluding `peerDependencies`) on internal packages should include the version of the internal package. This is so that an internal package will never depend on another internal package but get the package from the registry because that happening is very confusing and you should always prefer a local version of any given package.
+
+###### How it's fixed
+
+If the range is a [caret range](https://github.com/npm/node-semver#caret-ranges-123-025-004) or a [tilde range](https://github.com/npm/node-semver#tilde-ranges-123-12-1) with no other comparators, the range is set as a caret or tilde range respectively with the version of the internal package. If it is any other range, the range is set to the exact version of the internal package.
+
+##### Invalid dev and peer dependency relationship
+
+All `peerDependencies` should also be specified in `devDependencies` and the range specified in `devDependencies` should be a subset of the range for that dependency in `peerDependencies`. This is so that `peerDependencies` are available in the package during development for testing and etc.
+
+###### How it's fixed
+
+The range for the dependency specified in `peerDependencies` is added to `devDependencies` unless the package is already a non-peer dependency elsewhere in the repo in which, that range is used instead.
+
+##### Root has devDependencies
+
+In the root `package.json` of a multi-package repository, whether a dependency is in `devDependencies` or `dependencies` does not make a difference. To avoid confusion as to where a root dependency should go, all dependencies should go in `dependencies`.
+
+###### How it's fixed
+
+All `devDependencies` in the root `package.json` are moved to `dependencies`.
+
+##### Multiple dependency types
+
+A dependency shouldn't be specified in more than one of `dependencies`, `devDependencies` or `optionalDependencies`.
+
+###### How it's fixed
+
+The dep is removed from `devDependencies` or `optionalDependencies` if it's also in `dependencies`, if it's in `devDependencies` and `optionalDependencies`, it is removed from `dependencies`.
+
+##### Invalid package name
+
+There are rules from npm about what a package name can be. This is already enforced by npm on publish but in a multi-package repository, everything will be published together so some packages may depend on a package which can't be published. Checking for invalid package names prevents this kind of publish failure.
+
+###### How it's fixed
+
+This requires manual fixing as automatically fixing this may lead to valid but incorrect package names.
+
+##### Unsorted dependencies
+
+When you add a package with `yarn add` or etc. dependencies are sorted, and this can cause confusing diffs if the dependencies were not previously sorted. Dependencies should be sorted alphabetically to avoid this.
+
+###### How it's fixed
+
+This is fixed by sorting deps by key alphabetically.
+
+#### Implementation
+
+The current implementation of these constraints is Manypkg. There is a good chance that this will be replaced with the constraints feature in Yarn 2 when it is stable or a combination of the constraints feature and some helpers/small abstractions.
+
+### Public and private packages, modules and APIs
 
 ### Building Packages
 
@@ -77,7 +131,9 @@ Over time, Thinkmill has developed a variety of tooling to support working on mo
 
 The first constraint that our tooling should aim to meet is that they should not be tightly coupled to each other. There will be some slight exceptions to this where some minimal coupling allows the deduplication of configuration. For example, Changesets and Manypkg both determine what packages they should use by reading from Yarn Workspaces configuration. The aim of not having tight coupling between tools is to enable us to replace tools as better tools are developed and our needs change.
 
-The second constraint is that our tooling should
+### Documentation
+
+Use Docz probably. @Noviny should probably expand this
 
 ### Versioning
 
@@ -132,7 +188,95 @@ Releases should be done with the [Changeset Release Action](https://github.com/c
 
 ## Setup Guide
 
-// TODO
+### Setup Yarn Workspaces
+
+Create a `package.json`
+
+```json
+{
+  "name": "@scope-name/repo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["packages/*"]
+}
+```
+
+### Create Initial packages
+
+Create at least one package with a `package.json` at `packages/PKG_NAME/package.json`. You can use `yarn init` to do this from inside a package directory.
+
+### Setup Changesets
+
+Install `@changesets/cli`
+
+```bash
+yarn add @changesets/cli --ignore-workspace-root-check
+```
+
+Initialise Changesets
+
+```bash
+yarn changeset init
+```
+
+#### Setup Changesets GitHub Actions
+
+### Setup Manypkg
+
+Install `@manypkg/cli`
+
+```bash
+yarn add @manypkg/cli --ignore-workspace-root-check
+```
+
+Add `manypkg check` to the postinstall script. Your `package.json` should now look like this.
+
+```json
+{
+  "name": "@scope-name/repo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "@manypkg/cli": "^0.1.0"
+  },
+  "scripts": {
+    "postinstall": "manypkg check"
+  }
+}
+```
+
+### Setup Preconstruct
+
+Install `preconstruct`
+
+```bash
+yarn add preconstruct --ignore-workspace-root-check
+```
+
+Initialise Preconstruct.
+
+```
+yarn preconstruct init
+```
+
+Add `preconstruct dev` to the postinstall script. Your `package.json` should now look like this.
+
+```json
+{
+  "name": "@scope-name/repo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "@manypkg/cli": "^0.1.0",
+    "preconstruct": "^0.1.0"
+  },
+  "scripts": {
+    "postinstall": "manypkg check && preconstruct dev"
+  }
+}
+```
 
 ## Dictionary
 
