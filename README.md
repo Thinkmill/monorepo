@@ -1,4 +1,4 @@
-# Thinkmill Multi-package Repository Style Guide
+# Thinkmill Multi-Package Repository Style Guide
 
 Important Note: This style guide is currently very WIP
 
