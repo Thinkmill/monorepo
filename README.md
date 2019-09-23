@@ -29,7 +29,7 @@ A monorepo is made up of a set of packages which are...
 
 An entrypoint is something that is intended to be imported outside of a package. All packages must have at least one entrypoint, this will generally be the root of the package so the entrypoint can be imported as the package name. Some packages may also have multiple entrypoints, for example how `react-dom` has `react-dom` and `react-dom/server`.
 
-Entrypoints should exist as directories with `package.json` files rather than files so that multiple build types like CommonJS and ES Modules can exist
+Entrypoints should exist as directories with `package.json` files rather than files so that multiple build types like CommonJS and ES Modules can exist. It's important to note that every package has least one entrypoint and this will generally be the root of the package. Entrypoints are not something special that are only on some packages, they exist everywhere but they're often not configured specially.
 
 #### When should a package have multiple entrypoints?
 
@@ -117,15 +117,111 @@ The current implementation of these constraints is Manypkg. There is a good chan
 
 > **Note**: Building packages is only necessary if packages are being published
 
+All files should be compiled using Babel if they are compiled, not any other tool like the TypeScript compiler. This is so that we only have to use a single tool for code transformation of all different kinds of JavaScript. We also prefer Babel because of the extensibility it provides with plugins.
+
+> **Note**: The above is talking specifically about compilation, using TypeScript to type check code is completely fine but the code should be compiled with Babel. [There are some caveats](https://babeljs.io/docs/en/babel-plugin-transform-typescript#caveats) to do with compiling TypeScript with Babel, we think that the caveats are worth it for the consistency and extensibility of compiling with Babel.
+
 Working in monorepos adds some new problems to build tooling that aren't generally present in single package repos.
 
-The first problem is that there are a significant number of packages so setting up build tooling for each package is impractical and costly. This should be solved with tooling that can be setup a single time for multiple packages. A sub-problem of this is that because there are so many, tools should therefore make allow consumers to make a single decisions for the entire repo and ideally make inconsequential decisions themselves, for example the file names of dist files are inconsequential so tools should have a pattern
+The first problem is that there are a significant number of packages so setting up build tooling for each package is impractical and costly. This should be solved with tooling that can be setup a single time for multiple packages. A sub-problem of this is that because there are so many, tools should therefore allow consumers to make a single decision that applies to the entire repo rather than make a decision on a per-package basis. Tooling should also ideally make inconsequential decisions themselves, for example the file names of dist files are inconsequential so tools should have a set pattern for this so that users do not have to think about it.
+
+Packages should be built with [Preconstruct](https://github.com/preconstruct/preconstruct).
 
 #### Working in dev
 
-...Explain working in dev problem
+A common use case in multi-packages repos is that there are some packages which depend on each other and you want to test them. This creates a problem if you're building them with a tool like Preconstruct though. When you import packages, you'll be importing the dist files, so you have to run preconstruct watch or preconstruct build which is slow and requires running another process.
 
-This should be done with `preconstruct dev`, it should be added to the postinstall script in a repo so it's run automatically.
+Monorepos introduces a new problem that isn't generally present in single-package repos. When running tests or working on apps/websites, you need to import packages and those packages may themselves have dependencies on other packages. If those packages are built, you will be importing built files which means you either need to run a build script on every change or start a watch script in addition to the bundler or server process which is inconvenient and can cause confusion because someone can make a change and their change won't show up. The solution is to . There are some caveats to this solution. It is moving the responsibility to compile the files correctly
+
+This should be done with `preconstruct dev`, it should be added to the `postinstall` script in a repo so it's run automatically after installs.
+
+<details><summary>Previous solution to this problem</summary>
+
+Before the redirecting files solution came about, Preconstruct exported a set of aliases for different tools like webpack, Jest and Rollup that could be applied and the entrypoints would be aliased. This required every tool to be setup with the aliases which was
+
+</details>
+
+#### Babel Configuration
+
+It's very important that Babel is configured with a `babel.config.js` file rather than a `.babelrc` file. This is because `.babelrc` files will not be looked at outside of a package boundary whereas `babel.config.js` files will be assuming the `root` option is set at or above the directory with the `babel.config.js` file or the `rootMode` option is set to `upward` or `upward-optional`.
+
+An example Babel config might look like this.
+
+```jsx
+module.exports = {
+  presets: ["@babel/preset-env", "@babel/preset-react"]
+};
+```
+
+##### Configuring Babel With Various Tools
+
+Because some tools do not compile with Babel by default, do not follow Babel's standard config resolution or the compilation does not happen at the root of the repo and do not have `rootMode: "upward"` set, we've explained how to configure them to compile with Babel correctly below.
+
+###### Node
+
+`preconstruct dev` includes a require hook which will compile files with Babel when run with Node. Note that this doesn't apply to some tools like Jest even though they run in Node because they re-implement the `require` function. For tools like this, they will need to be configured to compile with Babel.
+
+###### Next.js
+
+Create a `next.config.js` file inside of the site directory that looks like this to compile files outside of the Next site's directories:
+
+```jsx
+module.exports = {
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.[jt]sx?$/,
+      use: options.defaultLoaders.babel,
+      exclude: [/node_modules/]
+    });
+    return config;
+  }
+};
+```
+
+Next.js does not do normal Babel config resolution and it does not use `rootMode: "upward"` so to ensure that the Babel config used in your Next.js site is identical to the config used throughout packages in the repo, you should create a `babel.config.js` file inside of the site directory
+
+```jsx
+module.exports = require("../path/to/root/babel.config");
+```
+
+###### Gatsby
+
+Gatsby already compiles files outside of it's own directory so the `babel-loader` options do not have to be changed.
+
+Gatsby does not do normal Babel config resolution though and it does not use `rootMode: "upward"` so to ensure that the Babel config used in your Gatsby site is identical to the config used throughout packages in the repo, you should create a `babel.config.js` file inside of the site directory
+
+```jsx
+module.exports = require("../path/to/root/babel.config");
+```
+
+##### Jest
+
+Install `babel-jest` and Babel compilation will work assuming Jest is run from the root, see [Jest's documentation for more details](https://jestjs.io/docs/en/getting-started#using-babel) for more details.
+
+```bash
+yarn add babel-jest
+```
+
+##### Webpack
+
+`babel-loader` should be configured like this if you're using webpack directly.
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.[jt]sx?$/,
+      exclude: /(node_modules)/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          rootMode: "upward"
+        }
+      }
+    }
+  ];
+}
+```
 
 ### Tooling
 
