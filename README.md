@@ -29,6 +29,8 @@ A monorepo is made up of a set of packages which are...
 
 An entrypoint is something that is intended to be imported outside of a package. All packages must have at least one entrypoint, this will generally be the root of the package so the entrypoint can be imported as the package name. Some packages may also have multiple entrypoints, for example how `react-dom` has `react-dom` and `react-dom/server`.
 
+Entrypoints should exist as directories with `package.json` files rather than files so that multiple build types like CommonJS and ES Modules can exist
+
 #### When should a package have multiple entrypoints?
 
 There are a couple reasons you may want to have multiple entrypoints in a package.
@@ -150,8 +152,6 @@ Versioning should be done with [Changesets](https://github.com/atlassian/changes
 
 > The Changeset bot will likely be replaced with a GitHub Action when Changesets 2 is out -->
 
-#### Why?
-
 #### How to know what semver bump type a change should have
 
 To decide what semver bump type a change should have, we need to introduce two terms:
@@ -163,7 +163,7 @@ To decide what semver bump type a change should have, we need to introduce two t
 
 > **Note**: Releasing is only necessary if packages are being published
 
-...Explaining why manually releasing is not the best
+Manually doing releases is a time consuming process and can be error prone with broken releases because of human error. To address this, we want to automate releases as much as possible. In general though, the maintainers of a project should still have control over when a release happens so that multiple changes can be batched together into a single release. The exception to this is when a project has a very large number of contributors to the point that it's impractical to have explicit releases. If this is true, releases should happen automatically on every merge to master and a tool like [Landkid](https://github.com/atlassian/landkid) to manage merging.
 
 Releases should be done with the [Changeset Release Action](https://github.com/changesets/action). The flow is that changesets are added to master and when there are changesets on master, a PR will be opened with the updates to the versions and changelogs, if more changesets are added, the PR is updated and when the PR is merged all the packages are publishing to npm. This means there is very little friction to doing a release but it is still an explicit action from a maintainer so that many changes can be batched together.
 
@@ -280,34 +280,18 @@ Add `preconstruct dev` to the postinstall script. Your `package.json` should now
 
 ## Dictionary
 
+- **single-package repo** - a repository which only contains a single package which is at the root of the repo
+- **multi-package repo** - a repository that contains multiple packages, this is also commonly referred to as a monorepo but we use multi-package repo because it more clearly describes what it is. This is generally linked together with a tool such as [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), [Bolt](https://github.com/boltpkg/bolt) or [Lerna](https://lerna.js.org/)
 - **release** - The combination of versioning and publishing a package or packages
-
-### From changesets:
-
 - **changeset** - an intent to release a set of packages at particular bump types with a summary of the changes made. Changesets are stackable, that is running `bump` will apply any number of changesets correctly. Changesets are used to generate further information, such as the `release information`, and the `release plan`.
 - **workspace** - a local package in a multi-package repo
 - **bump-type** - The type of change expected. Of type `major | minor | patch | none`, based on the change types of [semver](https://semver.org/)
 - **range-type** - The type of range a package depends on, such as `1.0.0`, `~1.0.0`, or `^1.0.0`. This is a subset of valid semver ranges as [defined by node](https://github.com/npm/node-semver#ranges), narrowing to ranges we can update programmatically.
 - **absolutely correct semver** - making semver versioning decisions to ensure nothing less than major is capable of breaking a consumer's code. Because literally any change is technically capable of breaking a user's code, absolutely correct semver requires that all changes are major changes.
 - **pragmatically correct semver** - Making semver decisions that you believe to be correct, but may be in error. A pragmatic assessment is likely to change with the number of users of a project, and the API surface area of the project. Whenever we talk about 'correct semver', we are referring to 'pragmatically correct semver'
-
-### from preconstruct:
-
-- **single-package repo** - a repository which only contains a single package which is at the root of the repo
-
-- **multi-package repo** - a repository that contains multiple packages, this is also commonly referred to as a monorepo but we use multi-package repo because it more clearly describes what it is. This is generally linked together with a tool such as [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), [Bolt](https://github.com/boltpkg/bolt) or [Lerna](https://lerna.js.org/)
-
 - **entrypoint** - something that is intended to be imported from outside a package with an associated source file and build types
-
 - **entrypoint source file** - the source file for an entrypoint that defaults to `src/index` and can be configured with the source option
-
 - **package** - a set of entrypoints with dependencies that is generally published to a package registry such as npm
-
-- **project** - the overarching structure where all Preconstruct commands are run with a set of packages and global config
-
-- **build type** - a file or group of files that Preconstruct outputs that is differentiated by its module type, whether it is intended for the browser or etc.
-
-- **externals** - modules that shouldn't be bundled and should instead be left as imports
 
 ## Not totally solidified thoughts on monorepo vs multi-package repo that will likely change
 
