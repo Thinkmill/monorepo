@@ -137,7 +137,7 @@ This should be done with `preconstruct dev`, it should be added to the `postinst
 
 <details><summary>Previous solution to this problem</summary>
 
-Before the redirecting files solution came about, Preconstruct exported a set of aliases for different tools like webpack, Jest and Rollup that could be applied and the entrypoints would be aliased. This required every tool to be setup with the aliases which was
+Before the redirecting files solution came about, Preconstruct exported a set of aliases for different tools like webpack, Jest and Rollup that could be applied and the entrypoints would be aliased. This required every tool to be setup with the aliases which is very annoying so it was replaced with `preconstruct dev`.
 
 </details>
 
