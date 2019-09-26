@@ -45,9 +45,23 @@ The other significant reason to use multiple entrypoints that's more applicable 
 
 If your answer to these questions is mostly yes then having multiple entrypoints might make sense for your package.
 
+### Package manifests
+
+Understanding package manifests which are also known as package.jsons because of their filename are an important part to understanding multi-package repos. Package manifests are primarily used between two main groups of tools. It’s never important to note that these two usages of packages manifests can be completely separated even though the information is often contained in the same package manifest.
+
+#### Usage by package managers
+
+The usage of a package manifest by a package manager is referred to as a package in this document. Package manifests are used by package managers to ...link...publish...install deps
+
+#### Usage by Node and bundlers
+
+The usage of package manifests by Node and bundlers is referred to as an entrypoint in this document. The way this works is any directory with a package manifest that is imported, the path specified in the main field (or `module` and similar fields) is used to resolve the module. This is useful because it allows you to let people import something but they will get a different file depending on the environment it’s being imported in so bundlers will be ES modules which can more easily be optimised and Node will still get CommonJS.
+
+> Node's documentation on Node's module resolution is very helpful to understand how this resolution algorithm works. It’s important to note though, bundlers generally use a subtly different module resolution algorithm to support fields like `module` and `browser`.
+
 ### Dependencies and Constraints
 
-A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes ten same version. To address this, we need to impose some constraints on the dependencies of packages.
+A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes the same version. To address this, we need to impose some constraints on the dependencies of packages.
 
 #### Constraints
 
