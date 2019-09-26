@@ -237,11 +237,41 @@ Use Docz probably. @Noviny should probably expand this
 
 > **Note**: Versioning is only necessary if packages are being published
 
-...Explain versioning problems in monorepos
+Versioning large projects, especially multi-package repos presents some problems that are generally less present on single-package repos(While this approach works on single-package repos, we’ve found that by the time this versioning strategy is helpful, a repo will be changed into a multi-package repo so that multiple packages can be used for things like websites even if only a single package is published). The amount of effort required to do a release is multiplied by the number of packages which gets impractical even if you only have a modest number of packages. We need tools that can take the load of maintainers so it’s easy to do releases.
 
-...Explain what a solution to this should be like
+The first problem is that changelogs are very useful for consumers but they’re generally written by a maintainer when they’re doing a release which is time consuming a results in less than ideal changelogs because they don’t have the complete context of the person who made the change. To address this, Thinkmill multi-package repos require contributors to declare an intent to release, called a changeset which includes two pieces of information.
 
-...Explain Changesets
+1. A change summary - this is included in changelogs
+2. A set of number of packages to release at set semver bump types.
+
+The format of this is currently a markdown file to contain the change summary with YAML front matter to describe the packages to be releases with the semver bump type. An example changeset releasing `@changesets/cli` with a major bump is shown below.
+
+```md
+---
+"@changesets/cli": major
+---
+
+A really helpful list of breaking changes that make Changesets better for everyone along with how to upgrade ❤️
+```
+
+The second problem unique to multi-package repos is bumping dependents. This is closely related to the constraint we impose in dependencies discussed above that all dependencies on internal packages must have a range where the version of the internal dependency is within it. Having to manually bump all of the necessary ranges and versions to satisfy this rule which be extremely time consuming so changesets will automatically bump the dependents of packages that are being released automatically according to some rules.
+
+1. If a dependency which is in `dependencies` or `optionalDependencies` is being released and the version will be out of the range that is specified as a dependency, the dependent(the package that has the dependency) should receive a patch bump. While there are some cases where this could result in a not high enough bump, this is done because it is what you want in most cases, for those other cases, you can add another changeset for the dependent with the bump it should receive
+2. If a peer dependency(a dependency which is in `peerDependencies`) is being released as a major or minor(though not patch), the dependent should receive a major bump. This is done because. We do not do this on patch bumps to peer dependencies because they shouldn’t introduce new features or behaviour that the dependent could rely on.
+
+# Writing a good changeset
+
+What qualities does a good changeset have?
+
+## Changesets for major changes
+
+Changesets for major changes should be more detailed than changesets for minor and patch changes because they include breaking changes which require users to change their code to account for the changes. The three most important things to include in changesets for major changes are:
+
+1. WHAT - what was the change made?
+2. HOW - how should consumers update?
+3. WHY - why was the change made?
+
+A frequent problem especially in open source libraries is people saying that something is a breaking change but it was released as a non-major change. While semver is often treated as something that should be followed absolutely, this is impractical. If packages were versioned with what we call "absolute semver" every single change would be a major change because someone could arguably rely on any piece of behaviour, even things that could be considered bugs. This would be horrible and completely destroy the value of semver. So rather than using "absolute semver", we prefer "pragmatic semver", this is making bumping decisions based on more information that whether something is a breaking change or not. For example, the consideration might include things like the number of users and the fact that upgrading major releases will happen less often than patches and minors so a vital security fix that would technically break something if someone was relying on it in a specific way would be acceptable as a patch if it brought a greater benefit by being released as a patch as opposed to a major.
 
 <!--
 Versioning should be done with [Changesets](https://github.com/atlassian/changesets). Changesets is a tool to allow contribours to declare intents to release packages. Contributors should create changesets when they submit Pull Requests. Repos should use the [Changeset Bot](https://github.com/apps/changeset-bot) to remind contributors to add changesets.
