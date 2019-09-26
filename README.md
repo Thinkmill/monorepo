@@ -243,6 +243,15 @@ Over time, Thinkmill has developed a variety of tooling to support working on mo
 
 The first constraint that our tooling should aim to meet is that they should not be tightly coupled to each other. There will be some slight exceptions to this where some minimal coupling allows the deduplication of configuration. For example, Changesets and Manypkg both determine what packages they should use by reading from Yarn Workspaces configuration. The aim of not having tight coupling between tools is to enable us to replace tools as better tools are developed and our needs change.
 
+<!-- Another constraint is that tooling that exists for multiple packages should generally be run from the root of the repo rather than an individual package. For example, Preconstruct, Jest and etc. are all run from the root rather than inside of package directories. This isn't true for sites and apps like Next.js and etc. because they are targeting a particular package rather than every package or a significant number of packages. The reason for this is that running tools from the root is that decisions can be made a single tome with tooling at the root as opposed to having to make the same decision for every package and th
+
+> I feel like this is turning into a thing - should we distinguish between repo tooling and package tooling(not sure if package tooling is the right term)
+>
+> - Repo Tooling - Tools that apply generally to all packages or a significant number of packages. e.g. Jest
+> - Package Tooling - Tools that only really exist on a per-package level. e.g. Next.js
+>
+> Problem: You might have multiple Next.js sites, they should still be setup per package?(probably) if so, what's the distinction here? -->
+
 ### Documentation
 
 Use Docz probably. @Noviny should probably expand this
