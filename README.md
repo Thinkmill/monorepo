@@ -21,6 +21,28 @@ What kinds of things go in a monorepo?
 
 ## Concepts
 
+<!-- - Packages
+- Entrypoints
+- Dependencies and Constraints
+- Public and private packages, modules and APIs
+- CI
+- Build
+- Tooling
+- Documentation
+- Versioning
+- Releasing
+- Deployment (include branch previews)
+
+Levels of granularity:
+
+- Within a module
+- Between modules
+- Packages within the monorepo
+- Outside the monorepo (private registry/scope)
+- Outside the monorepo publicly (you're either public or open source)
+
+How should the repo be configured depending on the above -->
+
 ### Packages
 
 A monorepo is made up of a set of packages which are...
@@ -315,18 +337,6 @@ To decide what semver bump type a change should have, we need to introduce two t
 Manually doing releases is a time consuming process and can be error prone with broken releases because of human error. To address this, we want to automate releases as much as possible. In general though, the maintainers of a project should still have control over when a release happens so that multiple changes can be batched together into a single release. The exception to this is when a project has a very large number of contributors to the point that it's impractical to have explicit releases. If this is true, releases should happen automatically on every merge to master and a tool like [Landkid](https://github.com/atlassian/landkid) to manage merging.
 
 Releases should be done with the [Changeset Release Action](https://github.com/changesets/action). The flow is that changesets are added to master and when there are changesets on master, a PR will be opened with the updates to the versions and changelogs, if more changesets are added, the PR is updated and when the PR is merged all the packages are publishing to npm. This means there is very little friction to doing a release but it is still an explicit action from a maintainer so that many changes can be batched together.
-
-- Packages
-- Entrypoints
-- Dependencies and Constraints
-- Public and private packages, modules and APIs
-- CI
-- Build
-- Tooling
-- Documentation
-- Versioning
-- Releasing
-- Deployment (include branch previews)
 
 ## Tooling
 
