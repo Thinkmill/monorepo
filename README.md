@@ -43,6 +43,24 @@ Levels of granularity:
 
 How should the repo be configured depending on the above -->
 
+<!-- ### Granularity of API something
+
+APIs within monorepos have different levels of availability(?). Depending on the level of,
+
+#### Within a module
+
+The lowest level of APIs is only exposing APIs to within a module. These things will generally not be the most thought out or well documented APIs.
+
+#### Between modules
+
+The step up from APIs within a module is between modules. These APIs will often still not be well documented or well thought out but they will be
+
+- Within a module
+- Between modules
+- Packages within the monorepo
+- Outside the repo (private registry/scope)
+- Outside the repo publicly (you're either public or open source) -->
+
 ### Packages
 
 A monorepo is made up of a set of packages which are...
@@ -199,25 +217,18 @@ Because some tools do not compile with Babel by default, do not follow Babel's s
 
 ###### Next.js
 
-Create a `next.config.js` file inside of the site directory that looks like this to compile files outside of the Next site's directories:
+Install `@preconstruct/next`.
 
-```jsx
-module.exports = {
-  webpack(config, options) {
-    config.module.rules.push({
-      test: /\.[jt]sx?$/,
-      use: options.defaultLoaders.babel,
-      exclude: [/node_modules/]
-    });
-    return config;
-  }
-};
+```bash
+yarn add @preconstruct/next
 ```
 
-Next.js does not do normal Babel config resolution and it does not use `rootMode: "upward"` so to ensure that the Babel config used in your Next.js site is identical to the config used throughout packages in the repo, you should create a `babel.config.js` file inside of the site directory
+Add `@preconstruct/next` to your `next.config.js`.
 
 ```jsx
-module.exports = require("../path/to/root/babel.config");
+const withPreconstruct = require("@preconstruct/next");
+
+module.exports = withPreconstruct({ ...yourOwnConfig });
 ```
 
 ###### Gatsby
@@ -337,6 +348,22 @@ To decide what semver bump type a change should have, we need to introduce two t
 Manually doing releases is a time consuming process and can be error prone with broken releases because of human error. To address this, we want to automate releases as much as possible. In general though, the maintainers of a project should still have control over when a release happens so that multiple changes can be batched together into a single release. The exception to this is when a project has a very large number of contributors to the point that it's impractical to have explicit releases. If this is true, releases should happen automatically on every merge to master and a tool like [Landkid](https://github.com/atlassian/landkid) to manage merging.
 
 Releases should be done with the [Changeset Release Action](https://github.com/changesets/action). The flow is that changesets are added to master and when there are changesets on master, a PR will be opened with the updates to the versions and changelogs, if more changesets are added, the PR is updated and when the PR is merged all the packages are publishing to npm. This means there is very little friction to doing a release but it is still an explicit action from a maintainer so that many changes can be batched together.
+
+### Releasing Apps/Sites
+
+The tooling to support releasing packages with Changesets does not have to be restricted to packages. Releasing apps or sites presents slightly different problems to releasing packages though, what are the differences?
+
+- Dependents aren't a thing
+- Releasing isn't restricted to a single platform, e.g. we want to deploy things to Netlify, S3, Now, Lambda, etc.
+
+What are the core parts of the Changesets process that aren't restricted to packages?
+
+- A contributor creates an intent to release (a changeset)
+  - For packages - we need semver and change summaries
+  - For apps or sites - do we need semver and change summaries?
+- A repo is versioned based on the changesets - this will generally be an explicit action from a maintainer
+  - Do we need partial releases?
+    - Use case: I have an app that I want to do a release for but I also have changes to my design system which is in the same repo as the app but I don't want to release my changes to the design system because X?
 
 ## Tooling
 
