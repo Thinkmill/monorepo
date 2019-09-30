@@ -241,7 +241,7 @@ Gatsby does not do normal Babel config resolution though and it does not use `ro
 module.exports = require("../path/to/root/babel.config");
 ```
 
-##### Jest
+###### Jest
 
 Install `babel-jest` and Babel compilation will work assuming Jest is run from the root, see [Jest's documentation for more details](https://jestjs.io/docs/en/getting-started#using-babel) for more details.
 
@@ -249,7 +249,7 @@ Install `babel-jest` and Babel compilation will work assuming Jest is run from t
 yarn add babel-jest
 ```
 
-##### Webpack
+###### Webpack
 
 `babel-loader` should be configured like this if you're using webpack directly.
 
