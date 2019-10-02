@@ -1,4 +1,4 @@
-# Thinkmill Multi-Package Repository Style Guide
+# Thinkmill Monorepo Style Guide
 
 Important Note: This style guide is currently very WIP
 
@@ -6,7 +6,11 @@ Important Note: This style guide is currently very WIP
 
 This style guide documents the standards for monorepos at Thinkmill along with explaining the reasoning for our decisions and tooling. This style guide is intended to be a living representation of how we do monorepos so over time, the recommendations will change as tools and workflows evolve. While the guide is designed holistically, the tools and decisions in this guide can be used independently of each other.
 
-## Reasoning behind multi-package repos
+## What is a monorepo
+
+In this context, a monorepo refers to a project that contains multiple javascript packages. See [the definition](#monorepo-disambiguation) for more information.
+
+## Reasoning behind monorepos
 
 > Use a monorepo when you have a set of packages that are intended to be designed, worked on, and tested and released together.
 
@@ -87,7 +91,7 @@ If your answer to these questions is mostly yes then having multiple entrypoints
 
 ### Package manifests
 
-Understanding package manifests which are also known as package.jsons because of their filename are an important part to understanding multi-package repos. Package manifests are primarily used between two main groups of tools. It’s never important to note that these two usages of packages manifests can be completely separated even though the information is often contained in the same package manifest.
+Understanding package manifests which are also known as package.jsons because of their filename are an important part to understanding monorepos. Package manifests are primarily used between two main groups of tools. It’s never important to note that these two usages of packages manifests can be completely separated even though the information is often contained in the same package manifest.
 
 #### Usage by package managers
 
@@ -131,7 +135,7 @@ The range for the dependency specified in `peerDependencies` is added to `devDep
 
 ##### Root has devDependencies
 
-In the root `package.json` of a multi-package repository, whether a dependency is in `devDependencies` or `dependencies` does not make a difference. To avoid confusion as to where a root dependency should go, all dependencies should go in `dependencies`.
+In the root `package.json` of a monorepo, whether a dependency is in `devDependencies` or `dependencies` does not make a difference. To avoid confusion as to where a root dependency should go, all dependencies should go in `dependencies`.
 
 ###### How it's fixed
 
@@ -147,7 +151,7 @@ The dep is removed from `devDependencies` or `optionalDependencies` if it's also
 
 ##### Invalid package name
 
-There are rules from npm about what a package name can be. This is already enforced by npm on publish but in a multi-package repository, everything will be published together so some packages may depend on a package which can't be published. Checking for invalid package names prevents this kind of publish failure.
+There are rules from npm about what a package name can be. This is already enforced by npm on publish but in a monorepo, everything will be published together so some packages may depend on a package which can't be published. Checking for invalid package names prevents this kind of publish failure.
 
 ###### How it's fixed
 
@@ -183,7 +187,7 @@ Packages should be built with [Preconstruct](https://github.com/preconstruct/pre
 
 #### Working in dev
 
-A common use case in multi-packages repos is that there are some packages which depend on each other and you want to test them. This creates a problem if you're building them with a tool like Preconstruct though. When you import packages, you'll be importing the dist files, so you have to run preconstruct watch or preconstruct build which is slow and requires running another process.
+A common use case in monorepos is that there are some packages which depend on each other and you want to test them. This creates a problem if you're building them with a tool like Preconstruct though. When you import packages, you'll be importing the dist files, so you have to run preconstruct watch or preconstruct build which is slow and requires running another process.
 
 Monorepos introduces a new problem that isn't generally present in single-package repos. When running tests or working on apps/websites, you need to import packages and those packages may themselves have dependencies on other packages. If those packages are built, you will be importing built files which means you either need to run a build script on every change or start a watch script in addition to the bundler or server process which is inconvenient and can cause confusion because someone can make a change and their change won't show up. The solution is to . There are some caveats to this solution. It is moving the responsibility to compile the files correctly
 
@@ -293,9 +297,9 @@ Use Docz probably. @Noviny should probably expand this
 
 > **Note**: Versioning is only necessary if packages are being published
 
-Versioning large projects, especially multi-package repos presents some problems that are generally less present on single-package repos(While this approach works on single-package repos, we’ve found that by the time this versioning strategy is helpful, a repo will be changed into a multi-package repo so that multiple packages can be used for things like websites even if only a single package is published). The amount of effort required to do a release is multiplied by the number of packages which gets impractical even if you only have a modest number of packages. We need tools that can take the load of maintainers so it’s easy to do releases.
+Versioning large projects, especially monorepos presents some problems that are generally less present on single-package repos(While this approach works on single-package repos, we’ve found that by the time this versioning strategy is helpful, a repo will be changed into a monorepo so that multiple packages can be used for things like websites even if only a single package is published). The amount of effort required to do a release is multiplied by the number of packages which gets impractical even if you only have a modest number of packages. We need tools that can take the load of maintainers so it’s easy to do releases.
 
-The first problem is that changelogs are very useful for consumers but they’re generally written by a maintainer when they’re doing a release which is time consuming a results in less than ideal changelogs because they don’t have the complete context of the person who made the change. To address this, Thinkmill multi-package repos require contributors to declare an intent to release, called a changeset which includes two pieces of information.
+The first problem is that changelogs are very useful for consumers but they’re generally written by a maintainer when they’re doing a release which is time consuming a results in less than ideal changelogs because they don’t have the complete context of the person who made the change. To address this, Thinkmill monorepos require contributors to declare an intent to release, called a changeset which includes two pieces of information.
 
 1. A change summary - this is included in changelogs
 2. A set of number of packages to release at set semver bump types.
@@ -310,7 +314,7 @@ The format of this is currently a markdown file to contain the change summary wi
 A really helpful list of breaking changes that make Changesets better for everyone along with how to upgrade ❤️
 ```
 
-The second problem unique to multi-package repos is bumping dependents. This is closely related to the constraint we impose in dependencies discussed above that all dependencies on internal packages must have a range where the version of the internal dependency is within it. Having to manually bump all of the necessary ranges and versions to satisfy this rule which be extremely time consuming so changesets will automatically bump the dependents of packages that are being released automatically according to some rules.
+The second problem unique to monorepos is bumping dependents. This is closely related to the constraint we impose in dependencies discussed above that all dependencies on internal packages must have a range where the version of the internal dependency is within it. Having to manually bump all of the necessary ranges and versions to satisfy this rule which be extremely time consuming so changesets will automatically bump the dependents of packages that are being released automatically according to some rules.
 
 1. If a dependency which is in `dependencies` or `optionalDependencies` is being released and the version will be out of the range that is specified as a dependency, the dependent(the package that has the dependency) should receive a patch bump. While there are some cases where this could result in a not high enough bump, this is done because it is what you want in most cases, for those other cases, you can add another changeset for the dependent with the bump it should receive
 2. If a peer dependency(a dependency which is in `peerDependencies`) is being released as a major or minor(though not patch), the dependent should receive a major bump. This is done because. We do not do this on patch bumps to peer dependencies because they shouldn’t introduce new features or behaviour that the dependent could rely on.
@@ -467,10 +471,10 @@ Add `preconstruct dev` to the postinstall script. Your `package.json` should now
 ## Dictionary
 
 - **single-package repo** - a repository which only contains a single package which is at the root of the repo
-- **multi-package repo** - a repository that contains multiple packages, this is also commonly referred to as a monorepo but we use multi-package repo because it more clearly describes what it is. This is generally linked together with a tool such as [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), [Bolt](https://github.com/boltpkg/bolt) or [Lerna](https://lerna.js.org/)
+- **multi-package repo** - a repository that contains multiple packages. This is generally linked together with a tool such as [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/), [Bolt](https://github.com/boltpkg/bolt) or [Lerna](https://lerna.js.org/). This is a synonym for monorepo
 - **release** - The combination of versioning and publishing a package or packages
 - **changeset** - an intent to release a set of packages at particular bump types with a summary of the changes made. Changesets are stackable, that is running `bump` will apply any number of changesets correctly. Changesets are used to generate further information, such as the `release information`, and the `release plan`.
-- **workspace** - a local package in a multi-package repo
+- **workspace** - a local package in a monorepo
 - **bump-type** - The type of change expected. Of type `major | minor | patch | none`, based on the change types of [semver](https://semver.org/)
 - **range-type** - The type of range a package depends on, such as `1.0.0`, `~1.0.0`, or `^1.0.0`. This is a subset of valid semver ranges as [defined by node](https://github.com/npm/node-semver#ranges), narrowing to ranges we can update programmatically.
 - **absolutely correct semver** - making semver versioning decisions to ensure nothing less than major is capable of breaking a consumer's code. Because literally any change is technically capable of breaking a user's code, absolutely correct semver requires that all changes are major changes.
@@ -479,8 +483,6 @@ Add `preconstruct dev` to the postinstall script. Your `package.json` should now
 - **entrypoint source file** - the source file for an entrypoint that defaults to `src/index` and can be configured with the source option
 - **package** - a set of entrypoints with dependencies that is generally published to a package registry such as npm
 
-## Not totally solidified thoughts on monorepo vs multi-package repo that will likely change
+### monorepo disambiguation
 
-> should we define "monorepos" vs "many-package repos"? multi-package repos can also be monorepos from a company or group perspective, but aren't necessarily. this a pragmatic approach
-
-There are two common ideas that a monorepo can refer to. The first is what companies like Google and Facebook do where everything is in a single repo. As monorepos developed in the JavaScript ecosystem with tools like Lerna and Yarn Workspaces, the term took on a slightly different meaning in this context though by referring to having multiple packages in a repository rather than encompassing everything from a company or even a project, for example Apollo has multiple monorepos with apollo-client and react-apollo. While the term monorepo doesn't really explain the second idea and a term such as multi-package repo would more clearly explain this idea, it is an extremely common way of explaining this across the JavaScript ecosystem so throughout this style guide, when the term monorepo is used, we are referring to the second definition. The first definition is less relevant to the projects at Thinkmill because we have a variety of client and open source projects which could not all be in the same repository.
+There are two common ideas that a monorepo can refer to. The first is what companies like Google and Facebook do where everything is in a single repo. As monorepos developed in the JavaScript ecosystem with tools like Lerna and Yarn Workspaces, the term took on a slightly different meaning in this context though by referring to having multiple packages in a repository rather than encompassing everything from a company or even a project, for example Apollo has multiple monorepos with apollo-client and react-apollo. Within this style guide, we are only talking about the second kind of monorepo.
