@@ -8,7 +8,7 @@ This style guide documents the standards for monorepos at Thinkmill along with e
 
 ## What is a monorepo
 
-In this context, a monorepo refers to a project that contains multiple javascript packages. See [the definition](#monorep-disambiguation) for more information.
+In this context, a monorepo refers to a project that contains multiple javascript packages. See [the definition](#monorepo-disambiguation) for more information.
 
 ## Reasoning behind monorepos
 
