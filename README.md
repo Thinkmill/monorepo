@@ -162,7 +162,7 @@ This requires manual fixing as automatically fixing this may lead to valid but i
 
 > NOTE: These restrictions are not enforced
 
-To make publishing easier, it is useful if every package in a monorepo exists under a single scope. We strongly recommend picking a scope name to use for all your packages. If you have unscoped packages, or multiple scopes, you introduce a risk that someone who is publishing may not have all necessary publish permissions, leading to failed publishes. The only exceptions you should make to this is if a different tool such as `npx` requires a particular format to the package names.
+To make publishing easier, it is useful if every package in a monorepo exists under a single scope. We strongly recommend picking a scope name to use for all your packages. If you have unscoped packages, or multiple scopes, you introduce a risk that someone who is publishing may not have all necessary publish permissions, leading to failed publishes. The only exceptions you should make to this is if a different tool requires a specific naming pattern, such as `yarn create` and `npm init` requiring unscoped packages for their create functions.
 
 ###### How it's fixed
 
