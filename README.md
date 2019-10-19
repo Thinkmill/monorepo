@@ -157,6 +157,17 @@ There are rules from npm about what a package name can be. This is already enfor
 
 This requires manual fixing as automatically fixing this may lead to valid but incorrect package names.
 
+
+##### One scope for the monorepo, all packages are scoped
+
+> NOTE: These restrictions are not enforced
+
+To make publishing easier, it is useful if every package in a monorepo exists under a single scope. We strongly recommend picking a scope name to use for all your packages. If you have unscoped packages, or multiple scopes, you introduce a risk that someone who is publishing may not have all necessary publish permissions, leading to failed publishes. The only exceptions you should make to this is if a different tool requires a specific naming pattern, such as `yarn create` and `npm init` requiring unscoped packages for their create functions.
+
+###### How it's fixed
+
+This is something to manually check, as we do not wish to strictly enforce it
+
 ##### Unsorted dependencies
 
 When you add a package with `yarn add` or etc. dependencies are sorted, and this can cause confusing diffs if the dependencies were not previously sorted. Dependencies should be sorted alphabetically to avoid this.
