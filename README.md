@@ -83,9 +83,35 @@ The most common reason is if you have some client side code and some server side
 
 The other significant reason to use multiple entrypoints that's more applicable to client side code is if you a sizable amount of code that you want people to be able to use but most people won't need it. A way to answer the question of "Should something be in its own entrypoint?" for this case, you can ask yourself these questions.
 
-- Is the thing rarely used in comparison to the primary part of your package?
-- Is the amount of code large?
-- If it's a dependency of something else exposed by the package(the dependent), will someone wnat to import it without also importing any dependents of this or is it likely that the dependent will be changed to so it doesn't depend on the thing in the future?
+1. Is the thing rarely used in comparison to the primary part of your package?
+2. Is the amount of code large?
+3. If it's a dependency of something else exposed by the package(the dependent), will someone wnat to import it without also importing any dependents of this or is it likely that the dependent will be changed to so it doesn't depend on the thing in the future?
+
+<details>
+
+<summary>Example for the third question</summary>
+
+Let's use an example, let's say you have a _really_ fancy select and for fun, let's call it `react-select`. It's got a `BaseSelect` component which is uncontrolled and it's got a `Select` component which is a wrapped version of `BaseSelect`. The primary component that most people will want to use is `Select` so we'll make it the entrypoint at `react-select` so it can be imported like this:
+
+```js
+import Select from "react-select";
+```
+
+People also might want to use `BaseSelect` though and importantly, people might want to use `BaseSelect` but not use `Select` and if they do that, we don't want them to have to load the load for `Select` so we'll have another entrypoint called `react-select/base` for them so it can be imported like this:
+
+```js
+import BaseSelect from "react-select/base";
+```
+
+Let's say we have a function for filtering called `createFilter`, we know we might want to change the API of it in the future though but we're not doing it now because _some reason_. We wan people to be able to use `createFilter` and it's used by `BaseSelect` right now. We want to change the function that we use for filtering in the future but we don't want to do a major version when we do(let's assume the behaviour won't change)/we still want to expose that `createFilter` function for consumers so we'll expose it as `react-select/filters` so it can be imported like this:
+
+```js
+import { createFilter } from "react-select/filters";
+```
+
+This means that when we remove the usage of `createFilter` in `BaseSelect`, people won't have to load the code for createFilter unless they're using it directly by importing it themselves.
+
+</details>
 
 If your answer to these questions is mostly yes then having multiple entrypoints might make sense for your package.
 
@@ -157,12 +183,11 @@ There are rules from npm about what a package name can be. This is already enfor
 
 This requires manual fixing as automatically fixing this may lead to valid but incorrect package names.
 
-
 ##### One scope for the monorepo, all packages are scoped
 
 > NOTE: These restrictions are not enforced
 
-To make publishing easier, it is useful if every package in a monorepo exists under a single scope. We strongly recommend picking a scope name to use for all your packages. If you have unscoped packages, or multiple scopes, you introduce a risk that someone who is publishing may not have all necessary publish permissions, leading to failed publishes. The only exceptions you should make to this is if a different tool requires a specific naming pattern, such as `yarn create` and `npm init` requiring unscoped packages for their create functions.
+All packages in a monorepo should be owned by a single npm org that has publish rights. We recommend that there is only ever one scope to make enforcing this easier. If you add a new unscoped package, you should make sure you add it to the org on npm as well.
 
 ###### How it's fixed
 
