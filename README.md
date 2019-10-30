@@ -103,7 +103,7 @@ People also might want to use `BaseSelect` though and importantly, people might 
 import BaseSelect from "react-select/base";
 ```
 
-Let's say we have a function for filtering called `createFilter`, we know we might want to change the API of it in the future though but we're not doing it now because _some reason_. We wan people to be able to use `createFilter` and it's used by `BaseSelect` right now. We want to change the function that we use for filtering in the future but we don't want to do a major version when we do(let's assume the behaviour won't change)/we still want to expose that `createFilter` function for consumers so we'll expose it as `react-select/filters` so it can be imported like this:
+Let's say we have a function for filtering called `createFilter`, we know we might want to change the API of it in the future though but we're not doing it now because _some reason_. We want people to be able to use `createFilter` and it's used by `BaseSelect` right now. We want to change the function that we use for filtering in the future but we don't want to do a major version when we do(let's assume the behaviour won't change)/we still want to expose that `createFilter` function for consumers so we'll expose it as `react-select/filters` so it can be imported like this:
 
 ```js
 import { createFilter } from "react-select/filters";
