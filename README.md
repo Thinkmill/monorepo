@@ -445,7 +445,17 @@ Initialise Changesets
 yarn changeset init
 ```
 
-#### Setup Changesets GitHub Actions
+<details>
+<summary>Recommended flow for setting up automated publishing</summary>
+
+1. [Create an npm account](https://www.npmjs.com/signup), you'll probably want to do this from another browser or incognito mode
+2. (optional) Enable 2FA on Auth(it's important that you don't enable 2FA on publish because the bot needs to be run from a GitHub Action so you can't provide a token)
+3. Invite the release bot to the org(s) it should be publishing. (If you have unscoped packages, make sure they are in the org. Add them by going to a team on the npm org and adding the unscoped packages)
+4. Create a token and add it to the GitHub repo for the project as a secret named `NPM_TOKEN`(settings -> secrets)
+5. Make sure that your release workflow has the content described at [the with publishing section](https://github.com/changesets/action#with-publishing)
+6. It should work now!! Sometimes the publish fails on the first time though. If that happens, try creating a new npm token and replacing the old one or wait a bit and retry it.
+
+</details>
 
 ### Setup Manypkg
 
