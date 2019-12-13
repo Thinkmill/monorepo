@@ -8,7 +8,7 @@ This style guide documents the standards for monorepos at Thinkmill along with e
 
 ## What is a monorepo
 
-In this context, a monorepo refers to a project that contains multiple javascript packages. See [the definition](#monorepo-disambiguation) for more information.
+In this context, a monorepo refers to a project that contains multiple JavaScript packages. See [the definition](#monorepo-disambiguation) for more information.
 
 ## Reasoning behind monorepos
 
@@ -125,13 +125,13 @@ The usage of a package manifest by a package manager is referred to as a package
 
 #### Usage by Node and bundlers
 
-The usage of package manifests by Node and bundlers is referred to as an entrypoint in this document. The way this works is any directory with a package manifest that is imported, the path specified in the main field (or `module` and similar fields) is used to resolve the module. This is useful because it allows you to let people import something but they will get a different file depending on the environment it’s being imported in so bundlers will be ES modules which can more easily be optimised and Node will still get CommonJS.
+The usage of package manifests by Node and bundlers is referred to as an entrypoint in this document. The way this works is any directory with a package manifest that is imported, the path specified in the main field (or `module` and similar fields) is used to resolve the module. This is useful because it allows you to let people import something but they will get a different file depending on the environment it’s being imported in so bundlers will be using ES modules which can more easily be optimised and Node will still get CommonJS.
 
-> Node's documentation on Node's module resolution is very helpful to understand how this resolution algorithm works. It’s important to note though, bundlers generally use a subtly different module resolution algorithm to support fields like `module` and `browser`.
+> [Node's documentation on Node's module resolution](https://nodejs.org/api/modules.html#modules_all_together) is very helpful to understand how this resolution algorithm works. It’s important to note though, bundlers generally use a subtly different module resolution algorithm to support fields like `module` and `browser`.
 
 ### Dependencies and Constraints
 
-A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes the same version. To address this, we need to impose some constraints on the dependencies of packages.
+A common problem that has been encountered in monorepos is that duplicated packages cause confusion in having many different copies of the same package at different and sometimes the same version. To address this, we need to impose some constraints on the dependencies of packages. These constraints are enforced automatically and often fixed by [Manypkg](https://github.com/Thinkmill/manypkg)
 
 #### Constraints
 
@@ -201,11 +201,7 @@ When you add a package with `yarn add` or etc. dependencies are sorted, and this
 
 This is fixed by sorting deps by key alphabetically.
 
-#### Implementation
-
-The current implementation of these constraints is Manypkg. There is a good chance that this will be replaced with the constraints feature in Yarn 2 when it is stable or a combination of the constraints feature and some helpers/small abstractions.
-
-### Public and private packages, modules and APIs
+<!-- ### Public and private packages, modules and APIs -->
 
 ### Building Packages
 
@@ -325,10 +321,6 @@ The first constraint that our tooling should aim to meet is that they should not
 >
 > Problem: You might have multiple Next.js sites, they should still be setup per package?(probably) if so, what's the distinction here? -->
 
-### Documentation
-
-Use Docz probably. @Noviny should probably expand this
-
 ### Versioning
 
 > **Note**: Versioning is only necessary if packages are being published
@@ -369,27 +361,15 @@ Changesets for major changes should be more detailed than changesets for minor a
 
 A frequent problem especially in open source libraries is people saying that something is a breaking change but it was released as a non-major change. While semver is often treated as something that should be followed absolutely, this is impractical. If packages were versioned with what we call "absolute semver" every single change would be a major change because someone could arguably rely on any piece of behaviour, even things that could be considered bugs. This would be horrible and completely destroy the value of semver. So rather than using "absolute semver", we prefer "pragmatic semver", this is making bumping decisions based on more information that whether something is a breaking change or not. For example, the consideration might include things like the number of users and the fact that upgrading major releases will happen less often than patches and minors so a vital security fix that would technically break something if someone was relying on it in a specific way would be acceptable as a patch if it brought a greater benefit by being released as a patch as opposed to a major.
 
-<!--
-Versioning should be done with [Changesets](https://github.com/atlassian/changesets). Changesets is a tool to allow contribours to declare intents to release packages. Contributors should create changesets when they submit Pull Requests. Repos should use the [Changeset Bot](https://github.com/apps/changeset-bot) to remind contributors to add changesets.
-
-> The Changeset bot will likely be replaced with a GitHub Action when Changesets 2 is out -->
-
-#### How to know what semver bump type a change should have
-
-To decide what semver bump type a change should have, we need to introduce two terms:
-
-- **absolutely correct semver** - making semver versioning decisions to ensure nothing less than major is capable of breaking a consumer's code. Because literally any change is technically capable of breaking a user's code, absolutely correct semver requires that all changes are major changes.
-- **pragmatically correct semver** - Making semver decisions that you believe to be correct, but may be technically incorrect. A pragmatic assessment is likely to change with the number of users of a project, and the API surface area of the project. Whenever we talk about 'correct semver', we are referring to 'pragmatically correct semver'
-
 ### Releasing
 
 > **Note**: Releasing is only necessary if packages are being published
 
-Manually doing releases is a time consuming process and can be error prone with broken releases because of human error. To address this, we want to automate releases as much as possible. In general though, the maintainers of a project should still have control over when a release happens so that multiple changes can be batched together into a single release. The exception to this is when a project has a very large number of contributors to the point that it's impractical to have explicit releases. If this is true, releases should happen automatically on every merge to master and a tool like [Landkid](https://github.com/atlassian/landkid) to manage merging.
+Manually doing releases is a time consuming process and can be error prone with broken releases because of human error. To address this, we want to automate releases as much as possible. In general though, the maintainers of a project should still have control over when a release happens so that multiple changes can be batched together into a single release.
 
 Releases should be done with the [Changeset Release Action](https://github.com/changesets/action). The flow is that changesets are added to master and when there are changesets on master, a PR will be opened with the updates to the versions and changelogs, if more changesets are added, the PR is updated and when the PR is merged all the packages are publishing to npm. This means there is very little friction to doing a release but it is still an explicit action from a maintainer so that many changes can be batched together.
 
-### Releasing Apps/Sites
+<!-- ### Releasing Apps/Sites
 
 The tooling to support releasing packages with Changesets does not have to be restricted to packages. Releasing apps or sites presents slightly different problems to releasing packages though, what are the differences?
 
@@ -403,14 +383,14 @@ What are the core parts of the Changesets process that aren't restricted to pack
   - For apps or sites - do we need semver and change summaries?
 - A repo is versioned based on the changesets - this will generally be an explicit action from a maintainer
   - Do we need partial releases?
-    - Use case: I have an app that I want to do a release for but I also have changes to my design system which is in the same repo as the app but I don't want to release my changes to the design system because X?
+    - Use case: I have an app that I want to do a release for but I also have changes to my design system which is in the same repo as the app but I don't want to release my changes to the design system because X? -->
 
 ## Tooling
 
-- [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
-- [manypkg](https://github.com/mitchellhamilton/manypkg)
-- [preconstruct](https://github.com/preconstruct/preconstruct)
-- [changesets](https://github.com/atlassian/changesets)
+- [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+- [Manypkg](https://github.com/Thinkmill/manypkg)
+- [Preconstruct](https://github.com/preconstruct/preconstruct)
+- [Changesets](https://github.com/atlassian/changesets)
 
 ## Setup Guide
 
@@ -474,7 +454,7 @@ Add `manypkg check` to the postinstall script. Your `package.json` should now lo
   "private": true,
   "workspaces": ["packages/*"],
   "dependencies": {
-    "@manypkg/cli": "^0.1.0"
+    "@manypkg/cli": "^0.9.0"
   },
   "scripts": {
     "postinstall": "manypkg check"
@@ -484,7 +464,7 @@ Add `manypkg check` to the postinstall script. Your `package.json` should now lo
 
 ### Setup Preconstruct
 
-Install `preconstruct`
+Install `@preconstruct/cli`
 
 ```bash
 yarn add @preconstruct/cli --ignore-workspace-root-check
@@ -505,8 +485,8 @@ Add `preconstruct dev` to the postinstall script. Your `package.json` should now
   "private": true,
   "workspaces": ["packages/*"],
   "dependencies": {
-    "@manypkg/cli": "^0.1.0",
-    "preconstruct": "^0.1.0"
+    "@manypkg/cli": "^0.9.0",
+    "@preconstruct/cli": "^1.1.4"
   },
   "scripts": {
     "postinstall": "manypkg check && preconstruct dev"
