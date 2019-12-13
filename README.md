@@ -477,7 +477,7 @@ Add `manypkg check` to the postinstall script. Your `package.json` should now lo
 Install `preconstruct`
 
 ```bash
-yarn add preconstruct --ignore-workspace-root-check
+yarn add @preconstruct/cli --ignore-workspace-root-check
 ```
 
 Initialise Preconstruct.
