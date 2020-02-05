@@ -280,6 +280,80 @@ Before the redirecting files solution came about, Preconstruct exported a set of
 
 </details>
 
+#### Babel Configuration
+
+It's very important that Babel is configured with a `babel.config.js` file rather than a `.babelrc` file. This is because `.babelrc` files will not be looked at outside of a package boundary whereas `babel.config.js` files will be assuming the `root` option is set at or above the directory with the `babel.config.js` file or the `rootMode` option is set to `upward` or `upward-optional`.
+
+An example Babel config might look like this.
+
+```jsx
+module.exports = {
+  presets: ["@babel/preset-env", "@babel/preset-react"]
+};
+```
+
+##### Configuring Babel With Various Tools
+
+Because some tools do not compile with Babel by default, do not follow Babel's standard config resolution or the compilation does not happen at the root of the repo and do not have `rootMode: "upward"` set, we've explained how to configure them to compile with Babel correctly below.
+
+###### Node
+
+`preconstruct dev` includes a require hook which will compile files with Babel when run with Node. Note that this doesn't apply to some tools like Jest even though they run in Node because they re-implement the `require` function. For tools like this, they will need to be configured to compile with Babel.
+
+###### Next.js
+
+Install `@preconstruct/next`.
+
+```bash
+yarn add @preconstruct/next
+```
+
+Add `@preconstruct/next` to your `next.config.js`.
+
+```jsx
+const withPreconstruct = require("@preconstruct/next");
+module.exports = withPreconstruct({ ...yourOwnConfig });
+```
+
+###### Gatsby
+
+Gatsby already compiles files outside of it's own directory so the `babel-loader` options do not have to be changed.
+
+Gatsby does not do normal Babel config resolution though and it does not use `rootMode: "upward"` so to ensure that the Babel config used in your Gatsby site is identical to the config used throughout packages in the repo, you should create a `babel.config.js` file inside of the site directory
+
+```jsx
+module.exports = require("../path/to/root/babel.config");
+```
+
+###### Jest
+
+Install `babel-jest` and Babel compilation will work assuming Jest is run from the root, see [Jest's documentation for more details](https://jestjs.io/docs/en/getting-started#using-babel) for more details.
+
+```bash
+yarn add babel-jest
+```
+
+###### Webpack
+
+`babel-loader` should be configured like this if you're using webpack directly.
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.[jt]sx?$/,
+      exclude: /(node_modules)/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          rootMode: "upward"
+        }
+      }
+    }
+  ];
+}
+```
+
 ### Tooling
 
 Over time, Thinkmill has developed a variety of tooling to support working on monorepos based on our experiences. There is a higher level set of ideas and constraints that all of our tooling should aim to meet which is explained below. It's also important to note that our tooling's primary purpose is not to compete with other tools, our primary goal is to have a good developer experience in monorepos. This means that in some cases, we may replace our own tooling with tooling from the wider community.

@@ -246,7 +246,7 @@ For starting apps, tests and etc. we recommend adding scripts to your root packa
 
 1. Create a folder where you want the site to go
 2. Follow the normal Next.js setup instructions where the guide asks you to perform terminal commands (such as installing packages), run them from your app's folder, not from the repository root.
-3. If you're using Preconstruct, [use `@preconstruct/next`]() so that packages will be compiled when working on the Next.js site
+3. If you're using Preconstruct, [use `@preconstruct/next`](#nextjs) so that packages will be compiled when working on the Next.js site
 
 ## Testing
 
@@ -269,4 +269,4 @@ You should also add scripts to run Jest in your root package.json
 }
 ```
 
-You should also [configure Babel with a `babel.config.js` file]()
+You should also [configure Babel with a `babel.config.js` file](#babel-configuration)
