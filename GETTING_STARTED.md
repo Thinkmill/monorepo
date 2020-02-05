@@ -8,6 +8,20 @@ Finally, the repository we are building is based on [our monorepo starter](https
 
 We will be assuming that you have [git](https://www.atlassian.com/git/tutorials/what-is-git) set up, as well as an [npm account](http://npmjs.com/). We are also using [yarn classic](https://classic.yarnpkg.com/lang/en/) for our package installs, so expect it to be installed globally. We are also assuming you are familiar with running [terminal commands](https://jes.st/the-terminal-101/)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Initialising your repository](#initialising-your-repository)
+- [Setting up your packages](#setting-up-your-packages)
+  - [Your package folders](#your-package-folders)
+    - [Adding `@monorepo-starter/simple-package`](#adding-monorepo-startersimple-package)
+- [Setting up building your packages](#setting-up-building-your-packages)
+- [Adding Manypkg to help validate your packages](#adding-manypkg-to-help-validate-your-packages)
+- [Setting up a publishing workflow](#setting-up-a-publishing-workflow)
+- [Setting up Jest and Babel](#setting-up-jest-and-babel)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Initialising your repository
 
 Firstly, we're going to need a repository to build our monorepo in. Running the following commands in your terminal will get you a new repository ready for work:

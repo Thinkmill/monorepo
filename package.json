@@ -1,0 +1,16 @@
+{
+  "name": "@thinkmill/monorepo",
+  "version": "0.0.0",
+  "repository": "https://github.com/Thinkmill/monorepo",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "doctoc": "^1.4.0",
+    "prettier": "^1.19.1"
+  },
+  "scripts": {
+    "toc": "doctoc . --no-title && yarn format",
+    "format": "prettier --write \"*.md\""
+  },
+  "prettier": {}
+}
