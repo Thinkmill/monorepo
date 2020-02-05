@@ -1,3 +1,5 @@
+> This guide is a work in progress. Not all sections are complete, completed sections may be a bit rough.
+
 # Working In A Monorepo
 
 ## Table of Contents
@@ -15,8 +17,17 @@
         - [Jest](#jest)
         - [Webpack](#webpack)
 - [Versioning and Publishing Packages](#versioning-and-publishing-packages)
+  - [Setting up Changesets](#setting-up-changesets)
+  - [Manual Releasing](#manual-releasing)
+  - [Automatic Versioning & Manual Publishing](#automatic-versioning--manual-publishing)
+  - [Automatic Releasing](#automatic-releasing)
 - [Dependency Management](#dependency-management)
 - [Structuring Packages](#structuring-packages)
+- [Scripts](#scripts)
+- [Using popular frameworks](#using-popular-frameworks)
+- [Next.js](#nextjs-1)
+- [Testing](#testing)
+  - [Jest](#jest-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -138,9 +149,63 @@ Packages in Thinkmill monorepos are versioned and published using Changesets. Ch
 - It handles monorepo-specific versioning problems like bumping dependent packages when they go out of range
 - It lowers the friction for maintainers to do a release but still allows maintainers to have control over when releases happen
 
-The way it works is that contributors run `yarn changeset` which will prompt them with questions to create a changeset which includes the packages that will
+The way it works is that contributors run `yarn changeset` which will prompt them with questions to create a changeset which includes the packages that will be bumped with the semver version types(major, minor, patch) that they will be bumped by and a summary of the change that will be included in the changelog.
 
-`changeset version` will then be run either manually or by [a bot](https://github.com/changesets/action) which will
+`changeset version` will then be run either manually or by [a bot](https://github.com/changesets/action) which will update the changelog and the package.jsons.
+
+### Setting up Changesets
+
+```shell
+yarn add @changesets/cli
+yarn changeset init
+```
+
+You should add a `changeset` script to your package.json. While this isn't technically necessary, we recommend it because having a script in the package.json makes it more visible.
+
+```json
+{
+  "scripts": {
+    "changeset": "changeset"
+  }
+}
+```
+
+There are three different strategies for releasing packages using Changesets
+
+### Manual Releasing
+
+To do manual releases, we recommend you add the following scripts.
+
+```json
+{
+  "scripts": {
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "yarn build && changeset publish"
+  }
+}
+```
+
+You should then run `yarn version-packages` when you're ready to do a release, commit the results and either create a PR or commit it to your default branch.
+
+When the result of `yarn version-packages` is on your default branch, you should run `yarn release` to publish the packages to npm.
+
+> Note that this scripts are not named version and publish because that would conflict with the Yarn commands with those names
+
+### Automatic Versioning & Manual Publishing
+
+To do manual releases, we recommend you add the following scripts.
+
+```json
+{
+  "scripts": {
+    "changeset": "changeset",
+    "release": "yarn build && changeset publish"
+  }
+}
+```
+
+### Automatic Releasing
 
 ## Dependency Management
 
@@ -152,3 +217,56 @@ Managing dependencies in monorepos can get very confusing very quickly so to add
 To see specific information on the rules that Manypkg enforces, [see Manypkg's documentation](https://github.com/thinkmill/manypkg#checks).
 
 ## Structuring Packages
+
+We recommend that packages are structured roughly as follows. This should not be followed exactly because different repos will have different requirements and most repos will not have all of these.
+
+- `packages/*` - Packages designed to be consumed by other packages (published to npm or internal to the repo)
+- `apps/*` - User-facing apps and websites such as CRA, Next.js and React Native apps
+- `services/*` - Back-end services such as Node apps
+- `tools/*` - Packages intended to be used only within dev loops for your repository such as Node scripts
+- `website/` - A documentation website
+
+If you have a design system in a repo with other packages/apps, the recommend structure is to have the design system packages at `design-system/packages/*` and the website at `design-system/website`.
+
+## Scripts
+
+For starting apps, tests and etc. we recommend adding scripts to your root package.json, for example:
+
+```json
+{
+  "scripts": {
+    "start:app-a": "cd apps/app-a && yarn start"
+  }
+}
+```
+
+## Using popular frameworks
+
+## Next.js
+
+1. Create a folder where you want the site to go
+2. Follow the normal Next.js setup instructions where the guide asks you to perform terminal commands (such as installing packages), run them from your app's folder, not from the repository root.
+3. If you're using Preconstruct, [use `@preconstruct/next`]() so that packages will be compiled when working on the Next.js site
+
+## Testing
+
+### Jest
+
+Jest should be setup from the root of the monorepo.
+
+```bash
+yarn add jest babel-jest
+```
+
+You should also add scripts to run Jest in your root package.json
+
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  }
+}
+```
+
+You should also [configure Babel with a `babel.config.js` file]()
