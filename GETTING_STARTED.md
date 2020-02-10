@@ -16,8 +16,11 @@ We will be assuming that you have [git](https://www.atlassian.com/git/tutorials/
   - [Your package folders](#your-package-folders)
     - [Adding `@monorepo-starter/simple-package`](#adding-monorepo-startersimple-package)
 - [Setting up building your packages](#setting-up-building-your-packages)
-- [Adding Manypkg to help validate your packages](#adding-manypkg-to-help-validate-your-packages)
+  - [Adding `@monorepo-starter/simple-service`](#adding-monorepo-startersimple-service)
+  - [Adding `@monorepo-starter/multiple-entrypoints`](#adding-monorepo-startermultiple-entrypoints)
+- [Adding Manypkg to help validate your dependencies](#adding-manypkg-to-help-validate-your-dependencies)
 - [Setting up a publishing workflow](#setting-up-a-publishing-workflow)
+  - [A brief concepts of changesets](#a-brief-concepts-of-changesets)
 - [Setting up Jest and Babel](#setting-up-jest-and-babel)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
