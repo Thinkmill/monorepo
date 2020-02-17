@@ -12,5 +12,8 @@
     "toc": "doctoc . --no-title && yarn format",
     "format": "prettier --write \"*.md\""
   },
-  "prettier": {}
+  "prettier": {},
+  "workspaces": [
+    "website"
+  ]
 }
