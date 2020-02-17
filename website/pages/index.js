@@ -81,21 +81,21 @@ export default function Index() {
       <section css={{ maxWidth: 800 }}>
         <H1>👋 Let's build with Monorepos!</H1>
         <Item href="https://github.com/Thinkmill/monorepo" icon="📖">
-          <H2>Monorepo Style Guide</H2>
+          <H2>Style Guide</H2>
           <p>
             We've compiled all of our knowledge about monorepos into a style
             guide to share how we build monorepos.
           </p>
         </Item>
         <Item href="https://github.com/Thinkmill/monorepo-starter" icon="🧳">
-          <H2>Monorepo Starter</H2>
+          <H2>Starter</H2>
           <p>
             We've taken all of our knowledge about monorepos and built a repo
             that you can started with right away.
           </p>
         </Item>
         <Item icon="🏗">
-          <H2>Monorepo Builder</H2>
+          <H2>Builder</H2>
           <p>
             We're creating a monorepo builder that will let you specify what you
             want your monorepo to look like and give you a ready to use
