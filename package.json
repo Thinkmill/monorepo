@@ -10,7 +10,8 @@
   },
   "scripts": {
     "toc": "doctoc . --no-title && yarn format",
-    "format": "prettier --write \"*.md\""
+    "format": "prettier --write \"*.md\"",
+    "website:build": "cd website && yarn build"
   },
   "prettier": {},
   "workspaces": [

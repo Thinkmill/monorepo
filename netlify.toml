@@ -1,0 +1,7 @@
+[build]
+  command = "yarn website:build"
+  publish = "website/out"
+[build.environment]
+  NODE_VERSION = "10"
+  YARN_VERSION = "1.22.0"
+  YARN_FLAGS = "--frozen-lockfile"
