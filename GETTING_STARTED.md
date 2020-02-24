@@ -17,7 +17,7 @@ We will be assuming that you have [git](https://www.atlassian.com/git/tutorials/
     - [Adding `@monorepo-starter/button`](#adding-monorepo-startersimple-package)
 - [Setting up building your packages](#setting-up-building-your-packages)
   - [Adding `@monorepo-starter/graphql-api`](#adding-monorepo-startersimple-service)
-  - [Adding `@monorepo-starter/button`](#adding-monorepo-startermultiple-entrypoints)
+  - [Adding `@monorepo-starter/next-app`](#adding-monorepo-startermultiple-entrypoints)
 - [Adding Manypkg to help validate your dependencies](#adding-manypkg-to-help-validate-your-dependencies)
 - [Setting up a publishing workflow](#setting-up-a-publishing-workflow)
   - [A brief concepts of changesets](#a-brief-concepts-of-changesets)
