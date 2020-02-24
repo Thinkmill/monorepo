@@ -246,7 +246,94 @@ After performing the setup, ensure the Next.js app is running by executing `yarn
 
 ### Adding `@monorepo-starter/simple-server`
 
-### Adding `@monorepo-starter/simple-service`
+### Adding `@monorepo-starter/graphql-api`
+
+To get started with creating a GraphQL API, at the root directory execute the following commands:
+
+```shell
+mkdir services
+mkdir services/graphql-api
+```
+
+From within the `services/graphql-api` directory, create a `package.json` with the following fields and run yarn
+
+```json
+{
+  "name": "@monorepo-starter/graphql-api",
+  "version": "1.0.0",
+  "main": "dist/graphql-api.cjs.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "apollo-server": "^2.10.0",
+    "graphql": "^14.6.0",
+    "graphql-tools": "^4.0.6"
+  }
+}
+```
+
+Create a `src/index.js` file with the following code:
+
+```javascript
+import { ApolloServer, gql } from "apollo-server";
+
+const typeDefs = gql`
+  type Query {
+    authors: [Author]
+    author(name: String): Author
+  }
+  type Book {
+    title: String
+    author: Author
+  }
+  type Author {
+    name: String
+    books: [Book]
+  }
+`;
+
+const authors = [
+  { name: "Ann Leckie" },
+  { name: "N K Jemisin" },
+  { name: "Melissa Caruso" }
+];
+
+const books = [
+  { title: "Ancillary Justice", author: "Ann Leckie" },
+  { title: "The Raven Tower", author: "Ann Leckie" },
+  { author: "Melissa Caruso", title: "The Tethered Mage" },
+  { author: "N K Jemisin", title: "The Fifth Season" },
+  { author: "N K Jemisin", title: "The City We Became" }
+];
+
+const resolvers = {
+  Query: {
+    authors() {
+      return authors;
+    },
+    author(_, { name }) {
+      return authors.find(author => author.name === name);
+    }
+  },
+  Author: {
+    books(author) {
+      return books.filter(book => book.author === author.name);
+    }
+  }
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
+
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
+```
+
+From the project root, execute `yarn`. After successfully installing the dependencies, execute `yarn start` from `services/graphql-api`, and you have a GraphQL playground running on `http://localhost:4000`
 
 Now that we have our package set up, we're going to set up a service that uses it. The first thing we are going to do is make our `simple-package` export the `sayHi` function instead of running it:
 
