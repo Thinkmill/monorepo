@@ -153,16 +153,16 @@ Add scripts to your `package.json`
 Add `preconstruct` field to the root package.json
 
 ```json
-"scripts": {
-  "postinstall": "preconstruct dev",
-  "build": "preconstruct build",
+  "scripts": {
+    "postinstall": "preconstruct dev",
+    "build": "preconstruct build",
+  }
   "preconstruct": {
     "packages": [
       "packages/*",
       "services/*",
     ]
   }
-}
 ```
 
 This tells `preconstruct` that it should be used for building `packages` in both the `/packages` and the `/services` folders. `/apps` and the `/website` folder will have their own build and run scripts, so we don't worry about using preconstruct to build those.
@@ -206,6 +206,10 @@ This should print out:
 Excellent, our function is now working. Let's change the last line of our file so we export the function, so our file is now
 
 > TODO teach preconstruct fix also
+
+### Adding `@monorepo-starter/next-app
+
+### Adding `@monorepo-starter/simple-server
 
 ### Adding `@monorepo-starter/simple-service`
 
@@ -258,127 +262,6 @@ node services/simple-service "Hello colors"
 and it should print:
 
 > TODO add screenshot
-
-### Adding `@monorepo-starter/multiple-entrypoints`
-
-One of the advantages of a monorepo is that we can isolate our concerns into packages, which have a public API for use elsewhere in the monorepo, and other internal code which is not designed for use outside the package. Sometimes though, we want to export multiple things from a package. There are two ways of doing it.
-
-1. Named exports:
-
-If you want to be able to write:
-
-```js
-// importing at
-import { sayHi, sayBi } from "@monorepo-starter/simple-package";
-```
-
-You are using named exports:
-
-```js
-// simple-package/src/index.js
-export { sayHi } from "./sayHi";
-export { sayBi } from "./sayBi";
-```
-
-Sometimes however, for reasons of code splitting, we instead want multiple entrypoints so we can import functions as:
-
-```js
-// importing as
-
-import sayBi from "@monorepo-starter/with-multiple-entrypoints/sayBi";
-import sayChange from "@monorepo-starter/with-multiple-entrypoints/sayChange";
-```
-
-The most commmon reason to do this is to make code splitting easier, and you can find more detailed docs about all things multiple entrypoints in the [preconstruct docs](https://preconstruct.tools/tutorials/multiple-entrypoints), for now, we are going to set up two entrypoints in a package in the simplest way.
-
-We are going to modify our `simple-service` package so that it has three commands.
-
-We want to be able to run:
-
-> TODO screenshot of it running sayHi, sayBi, sayChange functions
-
-```js
-import sayHi from "@monorepo-starter/simple-package";
-import sayBi from "@monorepo-starter/with-multi-entrypoints/sayBi";
-import sayChange from "@monorepo-starter/with-multi-entrypoints/sayChange";
-
-let words = process.argv[2];
-let emphasis = process.argv[3];
-
-if (emphasis === "bi") {
-  sayBi(words);
-} else if (emphasis === "change") {
-  sayChange(words);
-} else {
-  sayHi(words);
-}
-```
-
-Now we need to write our `sayBi` and `sayChange` functions. Firstly, we will need to create our new package. It should be at `packages/with-multiple-entrypoints` and should have the `package.json`
-
-```json
-{
-  "name": "@monorepo-starter/with-multi-entrypoints",
-  "version": "1.0.0",
-  "license": "MIT",
-  "dependencies": {
-    "cfonts": "^2.5.2"
-  }
-}
-```
-
-We are then going to quickly make a `sayBi` and `sayHi` function of the following:
-
-```js
-// packages/with-multiple-entrypoints/src/sayBi.js
-import cfonts from "cfonts";
-
-function sayBi(text) {
-  cfonts.say(text, {
-    font: "chrome",
-    colors: ["#ff0080", "#a349a4", "#0000ff"]
-  });
-}
-
-export default sayBi;
-```
-
-and
-
-```js
-// packages/with-multiple-entrypoints/src/sayChange.js
-import cfonts from "cfonts";
-
-function sayChange(text) {
-  cfonts.say(text, {
-    font: "chrome",
-    colors: ["#B77FDD", "#FFFFFF", "#48821E"]
-  });
-}
-
-export default sayChange;
-```
-
-These files are now accessible, but nothing will build them. We can tell preconstruct for each package what the entrypoints are:
-
-```json
-{
-  "name": "@monorepo-starter/with-multi-entrypoints",
-  "version": "1.0.0",
-  "main": "dist/with-multi-entrypoints.cjs.js",
-  "module": "dist/with-multi-entrypoints.esm.js",
-  "dependencies": {
-    "cfonts": "^2.5.2"
-  },
-  "preconstruct": {
-    "entrypoints": ["sayBi", "sayChange"]
-  }
-}
-```
-
-> TODO set up entrypoints so they don't error
-
-> TODO add npm ignores now
 
 ## Adding Manypkg to help validate your dependencies
 
