@@ -2,7 +2,7 @@
 
 # Getting Started with Monorepos
 
-Hi! Welcome. This guide is a very quick guide to help you set up your own monorepo, a repository that includes multiple javascript packages, all managed by a unifying root config. It aligns with our [monorepo style guide](./README.md), but is designed to walk you through the basics. If you want to have a better understanding of what decisions are being made for you, we recommend reading the guie after you've followed this tutorial.
+Hi! Welcome. This is a very quick guide to help you set up your own monorepo, a repository that includes multiple javascript packages, all managed by a unified root config. It aligns with our [monorepo style guide](./README.md), but is designed to walk you through the basics. If you want to have a better understanding of what decisions are being made for you, we recommend reading the guide after you've followed this tutorial.
 
 Finally, the repository we are building is based on [our monorepo starter](https://github.com/thinkmill/monorepo-starter), so if you simply want to be up and running, feel free to check that out.
 
@@ -14,10 +14,10 @@ We will be assuming that you have [git](https://www.atlassian.com/git/tutorials/
 - [Initialising your repository](#initialising-your-repository)
 - [Setting up your packages](#setting-up-your-packages)
   - [Your package folders](#your-package-folders)
-    - [Adding `@monorepo-starter/simple-package`](#adding-monorepo-startersimple-package)
+    - [Adding `@monorepo-starter/button`](#adding-monorepo-startersimple-package)
 - [Setting up building your packages](#setting-up-building-your-packages)
-  - [Adding `@monorepo-starter/simple-service`](#adding-monorepo-startersimple-service)
-  - [Adding `@monorepo-starter/multiple-entrypoints`](#adding-monorepo-startermultiple-entrypoints)
+  - [Adding `@monorepo-starter/graphql-api`](#adding-monorepo-startersimple-service)
+  - [Adding `@monorepo-starter/button`](#adding-monorepo-startermultiple-entrypoints)
 - [Adding Manypkg to help validate your dependencies](#adding-manypkg-to-help-validate-your-dependencies)
 - [Setting up a publishing workflow](#setting-up-a-publishing-workflow)
   - [A brief concepts of changesets](#a-brief-concepts-of-changesets)
@@ -37,7 +37,7 @@ git add .
 git commit -m "look, our new monorepo!"
 ```
 
-From here on out, unless otherwise stated, all terminal commands are assumed to be run from this root folder. We recommend you open this project now in an editory [such as VS Code](https://code.visualstudio.com/) so you can explore your monorepo as it comes together (we will be using screenshots from our own code editor to help demonstrate structures)
+From here on out, unless otherwise stated, all terminal commands are assumed to be run from this root folder. We recommend you open this project now in an editor [such as VS Code](https://code.visualstudio.com/) so you can explore your monorepo as it comes together (we will be using screenshots from our own code editor to help demonstrate structures)
 
 Next, we want to add our `package.json`. Create the file, then copy the following into it:
 
