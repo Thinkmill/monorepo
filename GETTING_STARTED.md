@@ -92,6 +92,22 @@ Which should leave our root `package.json` looking like:
 
 With that set up, you can now run `yarn` as your install script, and it will install all dependencies of all packages within those folders.
 
+To use a custom babel configuration, create `babel.config.js` file at the root level with the following code
+
+```javascript
+module.exports = {
+  presets: ["@babel/preset-env", "@babel/preset-react"],
+  plugins: ["@babel/plugin-transform-runtime"]
+};
+```
+
+Install these packages with the following command
+
+```shell
+yarn add @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/preset-react -W
+
+```
+
 Next up, let's add some packages so we can have some dependencies!
 
 ### Your package folders
@@ -190,8 +206,17 @@ From the project root, create a directory as follows
 `mkdir apps`
 `mkdir apps/next-app`
 
-To install [Next.js](https://nextjs.org), `cd apps/next-app`
-and following the installation steps from [here](https://nextjs.org/docs/getting-started#manual-setup)
+To install [Next.js](https://nextjs.org), `cd apps/next-app`, run `npm init`,
+and follow the installation steps from [here](https://nextjs.org/docs/getting-started#manual-setup).
+
+Additionally, create a configuration file called `next.config.js`. After creating the file, run `yarn add @preconstruct/next`. In the `next.config.js` file, add the following lines of code
+
+```javascript
+const withPreconstruct = require("@preconstruct/next");
+module.exports = withPreconstruct({});
+```
+
+After performing the setup, ensure the Next.js app is running by executing `yarn dev` and visiting `http://localhost:3000` on your browser.
 
 ### Adding `@monorepo-starter/simple-server`
 
