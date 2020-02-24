@@ -2,11 +2,18 @@
 
 # Getting Started with Monorepos
 
-Hi! Welcome. This is a very quick guide to help you set up your own monorepo, a repository that includes multiple javascript packages, all managed by a unified root config. It aligns with our [monorepo style guide](./README.md), but is designed to walk you through the basics. If you want to have a better understanding of what decisions are being made for you, we recommend reading the guide after you've followed this tutorial.
+Hi! Welcome. This is a very quick tutorial to help you set up your own monorepo, a repository that includes multiple javascript packages, all managed by a root config. It aligns with our [monorepo style guide](./README.md), but is designed to walk you through the basics. If you want to have a better understanding of what decisions are being made for you, we recommend reading the guide after this tutorial.
 
-Finally, the repository we are building is based on [our monorepo starter](https://github.com/thinkmill/monorepo-starter), so if you simply want to be up and running, feel free to check that out.
+The repository we are building is based on [our monorepo starter](https://github.com/thinkmill/monorepo-starter), so if you want to play around in a working monorepo, feel free to check that out.
 
-We will be assuming that you have [git](https://www.atlassian.com/git/tutorials/what-is-git) set up, as well as an [npm account](http://npmjs.com/). We are also using [yarn classic](https://classic.yarnpkg.com/lang/en/) for our package installs, so expect it to be installed globally. We are also assuming you are familiar with running [terminal commands](https://jes.st/the-terminal-101/)
+We will be using the following tools:
+
+- [git](https://www.atlassian.com/git/tutorials/what-is-git)
+- [npm account](http://npmjs.com/) if you're publishing
+- [yarn classic](https://classic.yarnpkg.com/lang/en/)
+- [terminal commands](https://jes.st/the-terminal-101/)
+
+---
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -35,10 +42,9 @@ cd my-new-monorepo
 git init
 ```
 
-From here on out, unless otherwise stated, all terminal commands are assumed to be run from this root folder. We recommend you open this project now in an editor [such as VS Code](https://code.visualstudio.com/) so you can explore your monorepo as it comes together (we will be using screenshots from our own code editor to help demonstrate structures)
+From here on out, unless otherwise stated, all terminal commands are assumed to be run from the root folder. We recommend you open this project now in an editor [such as VS Code](https://code.visualstudio.com/) so you can explore your monorepo as it comes together (we will be using screenshots from our own code editor to help demonstrate structures)
 
-Next, we want to add our `package.json`. Create the file by running the following command `touch package.json`
-, then copy the following into it:
+Next, we want to add the following to our `package.json`
 
 ```json
 {
@@ -68,17 +74,6 @@ We only want to allow folders at the first level of each of these to be checked 
   ]
 ```
 
-Additionally, we also want a documentation website for our monorepo's packages, which we are going to put in `/website`. We will update workpsaces to be:
-
-```json
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "services/*",
-    "website/*"
-  ]
-```
-
 Which should leave our root `package.json` looking like:
 
 ```json
@@ -86,13 +81,13 @@ Which should leave our root `package.json` looking like:
   "name": "@monorepo-starter/root",
   "version": "1.0.0",
   "private": true,
-  "workspaces": ["packages/*", "apps/*", "scripts/*", "website"]
+  "workspaces": ["packages/*", "apps/*", "services/*"]
 }
 ```
 
 With that set up, you can now run `yarn` as your install script, and it will install all dependencies of all packages within those folders.
 
-To use a custom babel configuration, create `babel.config.js` file at the root level with the following code
+Next, as we will be using babel in bundling some of our code. We are going to set that up now so it's ready for all our projects: Create `babel.config.js` file at the root level with the following code
 
 ```javascript
 module.exports = {
@@ -101,7 +96,7 @@ module.exports = {
 };
 ```
 
-Install these packages with the following command
+Next we install the babel plugins:
 
 ```shell
 yarn add @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/preset-react -W
@@ -111,11 +106,10 @@ Next up, let's add some packages so we can have some dependencies!
 
 ### Your package folders
 
-For this tutorial, we are going to be setting up 5 packages. They will be:
+For this tutorial, we are going to be setting up 3 packages. They will be:
 
 - `@monorepo-starter/button`
 - `@monorepo-starter/next-app`
-- `@monorepo-starter/website`
 - `@monorepo-starter/graphql-api`
 
 We are going to learn something different while setting up each of these packages. We will set up the `@monorepo-starter/button`, and `@monorepo-starter/graphql-api` now.
@@ -135,15 +129,19 @@ After navigating to the `button` directory, add the following `package.json`:
 {
   "name": "@monorepo-starter/button",
   "version": "1.0.0",
-  "main": "dist/button.cjs.js",
-  "module": "dist/button.esm.js",
   "description": "A very simple React button within a monorepo"
 }
 ```
 
-Install React by running the following command `yarn add react`. After installing React, within the `packages/button` directory, create a directory called `src`. Within the `src` directory, create an `index.js` file which will contain the source code for the `Button` component which we will create shortly.
+Next, we want to add react as a dependency to our button.
 
-Add the following code to the `index.js` file
+```
+cd packages/button && yarn add react
+```
+
+After installing React, within the `packages/button` directory, create a directory called `src`. Within the `src` directory, create an `index.js` file which will contain the source code for the `Button` component which we will create shortly.
+
+Add the following code to the `index.js` file so we have something to render.
 
 ```javascript
 import React from "react";
@@ -167,8 +165,6 @@ const Button = ({ onClick, children, isSelected }) => (
 export default Button;
 ```
 
-You can also add documentation for your React component by creating a `README.md` at the `packages/button/` level.
-
 ## Setting up building your packages
 
 To setup a build process for the packages within your monorepo, execute the following commands from the root level of your project.
@@ -177,6 +173,16 @@ To setup a build process for the packages within your monorepo, execute the foll
 yarn add @preconstruct/cli -W
 yarn preconstruct init
 ```
+
+This will prompt you to add a `main` field to the button's `package.json` - accept. Now your package.json should look like:
+
+```
+TODO package.json after that
+```
+
+Now that preconstruct is set up, we should make sure it gets run. We want two scripts in our root `package.json`.
+
+TODO: We need to add the preconstruct field before we run `init`
 
 Add scripts to your `package.json`
 
