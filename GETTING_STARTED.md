@@ -33,13 +33,12 @@ Firstly, we're going to need a repository to build our monorepo in. Running the 
 mkdir my-new-monorepo
 cd my-new-monorepo
 git init
-git add .
-git commit -m "look, our new monorepo!"
 ```
 
 From here on out, unless otherwise stated, all terminal commands are assumed to be run from this root folder. We recommend you open this project now in an editor [such as VS Code](https://code.visualstudio.com/) so you can explore your monorepo as it comes together (we will be using screenshots from our own code editor to help demonstrate structures)
 
-Next, we want to add our `package.json`. Create the file, then copy the following into it:
+Next, we want to add our `package.json`. Create the file by running the following command `touch package.json`
+, then copy the following into it:
 
 ```json
 {
@@ -69,14 +68,14 @@ We only want to allow folders at the first level of each of these to be checked 
   ]
 ```
 
-We also want a documentation website for our monorepo's packages, which we are going to put in `/website`. We will update workpsaces to be:
+Additionally, we also want a documentation website for our monorepo's packages, which we are going to put in `/website`. We will update workpsaces to be:
 
 ```json
   "workspaces": [
     "packages/*",
     "apps/*",
     "services/*",
-    "website"
+    "website/*"
   ]
 ```
 
@@ -99,52 +98,68 @@ Next up, let's add some packages so we can have some dependencies!
 
 For this tutorial, we are going to be setting up 5 packages. They will be:
 
-- `@monorepo-starter/simple-package`
-- `@monorepo-starter/private-package`
-- `@monorepo-starter/with-multiple-entrypoints`
-- `@monorepo-starter/internal-website`
-- `@monorepo-starter/simple-service`
+- `@monorepo-starter/button`
+- `@monorepo-starter/next-app`
+- `@monorepo-starter/website`
+- `@monorepo-starter/graphql-api`
 
-We are going to learn something different while setting up each of these packages. We will set up the `simple-package`, and `simple-service` now, and `with-multiple-entrypoints`, and `internal-website` a little later when we set up our build tooling. Finally, we will add our `private-package` when we set up publishing.
+We are going to learn something different while setting up each of these packages. We will set up the `@monorepo-starter/button`, and `@monorepo-starter/graphql-api` now.
 
-#### Adding `@monorepo-starter/simple-package`
+#### Adding `@monorepo-starter/button`
 
 This package is going to be our bedrock simplest package.
 
 ```shell
 mkdir packages
-mkdir packages/simple-package
+mkdir packages/button
 ```
 
-In our newly created `simple-package` directory, add the following `package.json`:
+After navigating to the `button` directory, add the following `package.json`:
 
 ```json
 {
-  "name": "@monorepo-starter/simple-package",
+  "name": "@monorepo-starter/button",
   "version": "1.0.0",
-  "description": "A very simple package within a monorepo"
+  "main": "dist/button.cjs.js",
+  "module": "dist/button.esm.js",
+  "description": "A very simple React button within a monorepo"
 }
 ```
 
-We want our package to do something, so we are going to add a simple function that the package exports, which takes in a string, and outputs nice colourful letters using [cfonts](https://www.npmjs.com/package/cfonts)
+Install React by running the following command `yarn add react`. After installing React, within the `packages/button` directory, create a directory called `src`. Within the `src` directory, create an `index.js` file which will contain the source code for the `Button` component which we will create shortly.
 
-The first thing we will want to do is install `cfonts`.
+Add the following code to the `index.js` file
 
-To do this, we will want to run:
+```javascript
+import React from "react";
 
+const Button = ({ onClick, children, isSelected }) => (
+  <button
+    style={{
+      border: 0,
+      backgroundColor: isSelected ? "rebeccapurple" : "hotpink",
+      color: isSelected ? "white" : "black",
+      padding: "12px 24px",
+      margin: "12px",
+      borderRadius: "3px"
+    }}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
+
+export default Button;
 ```
-cd packages/simple-package
-yarn add cfonts
-```
 
-This adds `cfonts` as a dependency to the `simple-package`, and installs it. Note the folder structure here:
-
-> TODO images of the install of this
+You can also add documentation for your React component by creating a `README.md` at the `packages/button/` level.
 
 ## Setting up building your packages
 
+To setup a build process for the packages within your monorepo, execute the following commands from the root level of your project.
+
 ```shell
-yarn add @preconstruct/cli
+yarn add @preconstruct/cli -W
 yarn preconstruct init
 ```
 
@@ -155,61 +170,30 @@ Add `preconstruct` field to the root package.json
 ```json
   "scripts": {
     "postinstall": "preconstruct dev",
-    "build": "preconstruct build",
-  }
+    "build": "preconstruct build"
+  },
   "preconstruct": {
     "packages": [
       "packages/*",
-      "services/*",
+      "services/*"
     ]
   }
 ```
 
 This tells `preconstruct` that it should be used for building `packages` in both the `/packages` and the `/services` folders. `/apps` and the `/website` folder will have their own build and run scripts, so we don't worry about using preconstruct to build those.
 
-We are now going to add contents to our first package. Create `packages/simple-package/src/index.js` and copy the following code into it:
+### Adding `@monorepo-starter/next-app`
 
-```js
-// packages/simple-package/src/index.js
-import cfonts from "cfonts";
+We will now create a [Next.js](https://nextjs.org/) project that will consume the `@monorepo-start/button` package we just created.
 
-function sayHi(text) {
-  cfonts.say(text, {
-    font: "chrome",
-    colors: ["#fff433", "#ffffff", "#9b59d0"]
-  });
-}
+From the project root, create a directory as follows
+`mkdir apps`
+`mkdir apps/next-app`
 
-sayHi("monorepos are cool");
-```
+To install [Next.js](https://nextjs.org), `cd apps/next-app`
+and following the installation steps from [here](https://nextjs.org/docs/getting-started#manual-setup)
 
-Quickly, we can try running this using:
-
-```shell
-node packages/simple-package/src/index.js
-```
-
-Which gives us the following error.
-
-> TODO add error screenshots
-
-This is because our code needs to be compiled. Run your `postinstall` script, and then try:
-
-```shell
-node packages/simple-package
-```
-
-This should print out:
-
-> TODO: Add success screenshot
-
-Excellent, our function is now working. Let's change the last line of our file so we export the function, so our file is now
-
-> TODO teach preconstruct fix also
-
-### Adding `@monorepo-starter/next-app
-
-### Adding `@monorepo-starter/simple-server
+### Adding `@monorepo-starter/simple-server`
 
 ### Adding `@monorepo-starter/simple-service`
 
