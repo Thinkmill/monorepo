@@ -105,7 +105,6 @@ Install these packages with the following command
 
 ```shell
 yarn add @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/preset-react -W
-
 ```
 
 Next up, let's add some packages so we can have some dependencies!
@@ -215,6 +214,33 @@ Additionally, create a configuration file called `next.config.js`. After creatin
 const withPreconstruct = require("@preconstruct/next");
 module.exports = withPreconstruct({});
 ```
+
+Install the button package we created with the following command
+
+```shell
+yarn add @monorepo-starter/button
+```
+
+To consume this button component, modify the `pages/index.js` to reflect the following code:
+
+```javascript
+import React from "react";
+import Button from "@monorepo-starter/button";
+
+const Index = () => {
+  return (
+    <div>
+      <Button isSelected onClick={() => alert("Hello!")}>
+        Hello World!
+      </Button>
+    </div>
+  );
+};
+
+export default Index;
+```
+
+If everything works well, you should see your custom button!
 
 After performing the setup, ensure the Next.js app is running by executing `yarn dev` and visiting `http://localhost:3000` on your browser.
 
