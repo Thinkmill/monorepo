@@ -258,7 +258,13 @@ const Index = () => {
 export default Index;
 ```
 
-After performing the setup, ensure the Next.js app is running by executing `yarn dev` and visiting `http://localhost:3000` on your browser.
+After performing the setup, ensure the Next.js app is running by executing
+
+```shell
+yarn dev
+```
+
+and visiting `http://localhost:3000` on your browser.
 
 If everything works well, you should see your custom button!
 
@@ -351,7 +357,13 @@ server.listen().then(({ url }) => {
 });
 ```
 
-From the project root, run `yarn`. After successfully installing the dependencies, run `yarn start` from `services/graphql-api`, and you have a GraphQL playground running on `http://localhost:4000/graphql`
+From the project root, run `yarn`. After successfully installing the dependencies, run
+
+```shell
+yarn start
+```
+
+from `services/graphql-api`, and you have a GraphQL playground running on `http://localhost:4000/graphql`
 
 ---
 
