@@ -225,7 +225,7 @@ const withPreconstruct = require("@preconstruct/next");
 module.exports = withPreconstruct();
 ```
 
-Install the button package by adding `"@mononrepo-starter/button": "1.0.0"` to the dependencies of the `package.json` and run `yarn` from the project root.
+Install the button package by adding `"@monorepo-starter/button": "1.0.0"` to the dependencies of the `package.json` and run `yarn` from the project root.
 
 To consume this button component, modify the `pages/index.js` to reflect the following code:
 
