@@ -367,7 +367,7 @@ from `services/graphql-api`, and you have a GraphQL playground running on `http:
 
 ---
 
-## Modfying `next-app` to consume the `graphql-api`
+## Modifying `next-app` to consume the `graphql-api`
 
 We will be using `apollo-boost` to consume the `@monorepo-starter/graphql-api`. Modify the `package.json` of `apps/next-app/package.json` to reflect the following changes and run `yarn` from the project root:
 
