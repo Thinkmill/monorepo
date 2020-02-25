@@ -544,7 +544,78 @@ yarn changeset version
 
 This 'consumes' the changesets - it will consume and smartly combine all changesets that exist. Since we only have one, it will only apply one. Look at a git diff though, and you will see more than one package has changed.
 
-> TODO: Photo of changed package.
+```diff
+diff --git a/.changeset/giant-jeans-swim.md b/.changeset/giant-jeans-swim.md
+deleted file mode 100644
+index a40d57e..0000000
+--- a/.changeset/giant-jeans-swim.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-"@monorepo-starter/button": major
+----
+-
+-A very important change.
+diff --git a/apps/next-app/CHANGELOG.md b/apps/next-app/CHANGELOG.md
+index e69de29..651819f 100644
+--- a/apps/next-app/CHANGELOG.md
++++ b/apps/next-app/CHANGELOG.md
+@@ -0,0 +1,8 @@
++# @monorepo-starter/next-app
++
++## 1.0.2
++
++### Patch Changes
++
++- Updated dependencies [efce5fd]
++  - @monorepo-starter/button@2.0.0
+diff --git a/apps/next-app/package.json b/apps/next-app/package.json
+index a2855cf..0ee3cef 100644
+--- a/apps/next-app/package.json
++++ b/apps/next-app/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@monorepo-starter/next-app",
+-  "version": "1.0.1",
++  "version": "1.0.2",
+   "scripts": {
+     "dev": "next",
+     "build": "next build",
+@@ -8,7 +8,7 @@
+   },
+   "dependencies": {
+     "@apollo/react-hooks": "^3.1.3",
+-    "@monorepo-starter/button": "1.0.0",
++    "@monorepo-starter/button": "2.0.0",
+     "@preconstruct/next": "^1.0.1",
+     "apollo-boost": "^0.4.7",
+     "graphql": "^14.6.0",
+diff --git a/packages/button/CHANGELOG.md b/packages/button/CHANGELOG.md
+index e69de29..b681845 100644
+--- a/packages/button/CHANGELOG.md
++++ b/packages/button/CHANGELOG.md
+@@ -0,0 +1,7 @@
++# @monorepo-starter/button
++
++## 2.0.0
++
++### Major Changes
++
++- efce5fd: A very important change.
+diff --git a/packages/button/package.json b/packages/button/package.json
+index d5f922a..1704fcc 100644
+--- a/packages/button/package.json
++++ b/packages/button/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@monorepo-starter/button",
+-  "version": "1.0.0",
++  "version": "2.0.0",
+   "description": "A very simple React button within a monorepo",
+   "main": "dist/button.cjs.js",
+   "module": "dist/button.esm.js",
+
+```
 
 This is because our `service` depends on our `simple-package`, so we need to update both. If we don't, we'll end up in one of the very-bad states we talked about back when discussing adding `manypkg`.
 
