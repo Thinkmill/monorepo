@@ -556,4 +556,4 @@ yarn preconstruct build && yarn changeset publish
 
 > It's a good idea to alias this as a node script: `"release": "yarn preconstruct build && yarn changeset publish"`
 
-The link to the complete `monorepo-starter` can be found [here](https://github.com/Thinkmill/monorepo-starter)
+Finally, the link to the complete `monorepo-starter` can be found [here](https://github.com/Thinkmill/monorepo-starter)
