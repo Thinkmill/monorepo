@@ -218,14 +218,26 @@ To install [Next.js](https://nextjs.org), create a package.json at `apps/next-ap
 
 and follow the installation steps from [here](https://nextjs.org/docs/getting-started#manual-setup).
 
-Additionally, create a configuration file called `next.config.js`. After creating the file, run `yarn add @preconstruct/next`. In the `next.config.js` file, add the following lines of code
+Additionally, create a configuration file called `next.config.js`. After creating the file, run
+
+```shell
+yarn add @preconstruct/next
+```
+
+In the `next.config.js` file, add the following lines of code
 
 ```javascript
 const withPreconstruct = require("@preconstruct/next");
 module.exports = withPreconstruct();
 ```
 
-Install the button package by adding `"@monorepo-starter/button": "1.0.0"` to the dependencies of the `package.json` and run `yarn` from the project root.
+Install the button package by adding
+
+```json
+"@monorepo-starter/button": "1.0.0"
+```
+
+to the dependencies of the `package.json` and run `yarn` from the project root.
 
 To consume this button component, modify the `pages/index.js` to reflect the following code:
 
