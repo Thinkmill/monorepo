@@ -509,7 +509,13 @@ function HomePage() {
 export default HomePage;
 ```
 
-Ensure the `graphql-api` is up and running by executing the following command from the project root `cd services/graphql-api && yarn start`. Run `yarn start` from within `apps/next-app` and visit `http://localhost:3000` to see your new graphql app!
+Ensure the `graphql-api` is up and running by executing the following command from the project root
+
+```shell
+cd services/graphql-api && yarn start
+```
+
+Run `yarn dev` from within `apps/next-app` and visit `http://localhost:3000` to see your new graphql app!
 
 ## Adding Manypkg to help validate your dependencies
 
