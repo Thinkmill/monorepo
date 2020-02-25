@@ -21,14 +21,14 @@ We will be using the following tools:
 - [Initialising your repository](#initialising-your-repository)
 - [Setting up your packages](#setting-up-your-packages)
   - [Your package folders](#your-package-folders)
-    - [Adding `@monorepo-starter/button`](#adding-monorepo-startersimple-package)
+    - [Adding `@monorepo-starter/button`](#adding-monorepo-starterbutton)
 - [Setting up building your packages](#setting-up-building-your-packages)
-  - [Adding `@monorepo-starter/graphql-api`](#adding-monorepo-startersimple-service)
-  - [Adding `@monorepo-starter/next-app`](#adding-monorepo-startermultiple-entrypoints)
+  - [Adding `@monorepo-starter/next-app`](#adding-monorepo-starternext-app)
+  - [Adding `@monorepo-starter/graphql-api`](#adding-monorepo-startergraphql-api)
+- [Modifying `next-app` to consume the `graphql-api`](#modifying-next-app-to-consume-the-graphql-api)
 - [Adding Manypkg to help validate your dependencies](#adding-manypkg-to-help-validate-your-dependencies)
 - [Setting up a publishing workflow](#setting-up-a-publishing-workflow)
-  - [A brief concepts of changesets](#a-brief-concepts-of-changesets)
-- [Setting up Jest and Babel](#setting-up-jest-and-babel)
+  - [A brief explanation of changesets](#a-brief-explanation-of-changesets)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -93,7 +93,7 @@ Which should leave our root `package.json` looking like:
 }
 ```
 
-Next, as we will be using babel in bundling some of our code. We are going to set that up now so it's ready for all our projects: Create `babel.config.js` file at the root level with the following code
+Next, as we will be using babel in bundling some of our code. We are going to set that up now so it's ready for all our projects: Create a `babel.config.js` file at the root level with the following code
 
 ```javascript
 // babel.config.js
@@ -110,7 +110,11 @@ yarn add @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/pr
 ```
 
 <details>
-<summary>Wondering what the `-W` flag does?</summary>
+<summary>
+
+Wondering what the `-W` flag does?
+
+</summary>
 
 The `-W` flag allows yarn to install packages at the root level. For more information on how this works, please refer to the [documentation](https://classic.yarnpkg.com/en/docs/cli/add#toc-yarn-add-ignore-workspace-root-check-w)
 
@@ -130,7 +134,7 @@ We are going to learn something different while setting up each of these package
 
 #### Adding `@monorepo-starter/button`
 
-This package is going to be our bedrock simplest package. - reword
+Run the following commands to create the button package directory.
 
 ```shell
 mkdir packages
@@ -149,8 +153,10 @@ After navigating to the `button` directory, add the following `package.json`:
 
 Next, we want to add react as a dependency to our button.
 
-```
-cd packages/button && yarn add react && cd ../..
+```shell
+cd packages/button
+yarn add react
+cd ../..
 ```
 
 After installing React, within the `packages/button` directory, create a directory called `src`. Within the `src` directory, create an `index.js` file which will contain the source code for the `Button` component which we will create shortly.
@@ -199,7 +205,7 @@ This will prompt you with some questions, you should answer with the following r
 
 Now that Preconstruct is set up, we should make sure it gets run. We want two scripts in our root `package.json`.
 
-Add the following scripts to your `package.json`:
+Add the following scripts to your root `package.json`:
 
 ```json
 "scripts": {
@@ -214,11 +220,14 @@ This tells Preconstruct that it should be used for building packages in both the
 
 We will now create a [Next.js](https://nextjs.org/) project that will consume the `@monorepo-starter/button` package we just created.
 
-From the project root, create a directory as follows
-`mkdir apps`
-`mkdir apps/next-app`
+From the project root, create a directory as follows:
 
-To install [Next.js](https://nextjs.org), create a package.json at `apps/next-app/package.json` with the following content:
+```shell
+mkdir apps
+mkdir apps/next-app
+```
+
+Create a package.json at `apps/next-app/package.json` with the following content:
 
 ```json
 {
@@ -227,9 +236,10 @@ To install [Next.js](https://nextjs.org), create a package.json at `apps/next-ap
 }
 ```
 
-Run the following commands to install Next.js:
+Run the following commands to install [Next.js](https://nextjs.org):
 
 ```shell
+# in apps/next-app
 yarn add react react-dom next @preconstruct/next
 ```
 
@@ -384,6 +394,7 @@ server.listen().then(({ url }) => {
 Once that file is created, run the following commands:
 
 ```shell
+# in the project root
 yarn
 cd services/graphql-api
 yarn start
@@ -398,7 +409,7 @@ You should now have a GraphQL playground running at `http://localhost:4000/graph
 We will be using Apollo Client to consume the `@monorepo-starter/graphql-api`. Run the following commands to install the packages we need:
 
 ```shell
-cd services/graphql-api
+cd apps/next-app
 yarn add @apollo/react-hooks apollo-boost graphql isomorphic-unfetch
 cd ../../
 yarn
