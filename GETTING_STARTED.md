@@ -116,7 +116,7 @@ We are going to learn something different while setting up each of these package
 
 #### Adding `@monorepo-starter/button`
 
-This package is going to be our bedrock simplest package.
+This package is going to be our bedrock simplest package. - reword
 
 ```shell
 mkdir packages
@@ -182,11 +182,7 @@ TODO package.json after that
 
 Now that preconstruct is set up, we should make sure it gets run. We want two scripts in our root `package.json`.
 
-TODO: We need to add the preconstruct field before we run `init`
-
-Add scripts to your `package.json`
-
-Add `preconstruct` field to the root package.json
+Add the following `preconstruct` field and scripts to your `package.json`:
 
 ```json
   "scripts": {
@@ -201,31 +197,35 @@ Add `preconstruct` field to the root package.json
   }
 ```
 
-This tells `preconstruct` that it should be used for building `packages` in both the `/packages` and the `/services` folders. `/apps` and the `/website` folder will have their own build and run scripts, so we don't worry about using preconstruct to build those.
+This tells Preconstruct that it should be used for building packages in both the `packages/` and the `services/` folders. The `apps/` packages will have their own build and run scripts, so we won't worry about using preconstruct to build those.
 
 ### Adding `@monorepo-starter/next-app`
 
-We will now create a [Next.js](https://nextjs.org/) project that will consume the `@monorepo-start/button` package we just created.
+We will now create a [Next.js](https://nextjs.org/) project that will consume the `@monorepo-starter/button` package we just created.
 
 From the project root, create a directory as follows
 `mkdir apps`
 `mkdir apps/next-app`
 
-To install [Next.js](https://nextjs.org), `cd apps/next-app`, run `npm init`,
+To install [Next.js](https://nextjs.org), create a package.json at `apps/next-app/package.json` with the following content:
+
+```json
+{
+  "name": "@monorepo-starter/next-app",
+  "version": "1.0.0"
+}
+```
+
 and follow the installation steps from [here](https://nextjs.org/docs/getting-started#manual-setup).
 
 Additionally, create a configuration file called `next.config.js`. After creating the file, run `yarn add @preconstruct/next`. In the `next.config.js` file, add the following lines of code
 
 ```javascript
 const withPreconstruct = require("@preconstruct/next");
-module.exports = withPreconstruct({});
+module.exports = withPreconstruct();
 ```
 
-Install the button package we created with the following command
-
-```shell
-yarn add @monorepo-starter/button
-```
+Install the button package by adding `"@mononrepo-starter/button": "1.0.0"` to the dependencies of the `package.json` and run `yarn` from the project root.
 
 To consume this button component, modify the `pages/index.js` to reflect the following code:
 
@@ -246,11 +246,11 @@ const Index = () => {
 export default Index;
 ```
 
-If everything works well, you should see your custom button!
-
 After performing the setup, ensure the Next.js app is running by executing `yarn dev` and visiting `http://localhost:3000` on your browser.
 
-### Adding `@monorepo-starter/simple-server`
+If everything works well, you should see your custom button!
+
+---
 
 ### Adding `@monorepo-starter/graphql-api`
 
@@ -261,7 +261,7 @@ mkdir services
 mkdir services/graphql-api
 ```
 
-From within the `services/graphql-api` directory, create a `package.json` with the following fields and run yarn
+From within the `services/graphql-api` directory, create a `package.json` with the following fields and run `yarn` from the project root.
 
 ```json
 {
@@ -339,67 +339,164 @@ server.listen().then(({ url }) => {
 });
 ```
 
-From the project root, execute `yarn`. After successfully installing the dependencies, execute `yarn start` from `services/graphql-api`, and you have a GraphQL playground running on `http://localhost:4000`
+From the project root, run `yarn`. After successfully installing the dependencies, run `yarn start` from `services/graphql-api`, and you have a GraphQL playground running on `http://localhost:4000/graphql`
 
-Now that we have our package set up, we're going to set up a service that uses it. The first thing we are going to do is make our `simple-package` export the `sayHi` function instead of running it:
+---
 
-```js
-// packages/simple-package/src/index.js
-import cfonts from "cfonts";
+## Modfying `next-app` to consume the `graphql-api`
 
-function sayHi(text) {
-  cfonts.say(text, {
-    font: "chrome",
-    colors: ["#fff433", "#ffffff", "#9b59d0"]
-  });
-}
-
-export default sayHi;
-```
-
-Next, we are going to add a new package into `services`. Make the file `services/simple-service/package.json` and copy over the following:
+We will be using `apollo-boost` to consume the `@monorepo-starter/graphql-api`. Modify the `package.json` of `apps/next-app/package.json` to reflect the following changes and run `yarn` from the project root:
 
 ```json
 {
-  "name": "@monorepo-starter/simple-service",
+  "name": "@monorepo-starter/next-app",
   "version": "1.0.0",
-  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
-    "@monorepo-starter/simple-package": "^1.0.0"
+    "@apollo/react-hooks": "^3.1.3",
+    "@monorepo-starter/button": "^1.0.0",
+    "@preconstruct/next": "^1.0.1",
+    "apollo-boost": "^0.4.7",
+    "graphql": "^14.6.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.2.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
 ```
 
-Next run: `yarn` - this will link your `simple-package` into the service.
+Create a `_app.js` file within `pages/` with the following code:
 
-Now create `services/simple-service/src/index.js` and add the following:
+```javascript
+import React from "react";
+import fetch from "isomorphic-unfetch";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
 
-```js
-// services/simple-service/src/index.js
-import sayHi from "@monorepo-starter/simple-package";
+const client = new ApolloClient({
+  uri: "http://localhost:4000/",
+  fetch
+});
 
-sayHi(process.argv[2]);
+const App = ({ Component, pageProps }) => (
+  <ApolloProvider client={client}>
+    <Component {...pageProps} />
+  </ApolloProvider>
+);
+
+export default App;
 ```
 
-Now we have a very simple command line utility! We can now run:
+To learn more about modifying the `App` component within a `Next.js` app, please follow the documentation [here](https://nextjs.org/docs/advanced-features/custom-app).
 
-```shell
-node services/simple-service "Hello colors"
+Modify the `pages/index.js` component with the code below:
+
+```javascript
+import React from "react";
+import Button from "@monorepo-starter/button";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+
+const getAuthorDetails = gql`
+  query($name: String) {
+    author(name: $name) {
+      name
+      books {
+        title
+      }
+    }
+  }
+`;
+
+const getAuthors = gql`
+  query {
+    authors {
+      name
+    }
+  }
+`;
+
+const Preamble = () => (
+  <>
+    <h1>Welcome to Our monorepo starter!</h1>
+    <p>
+      This is a simple project, with three packages, an app (this!), a graphql
+      server, and a button component.
+    </p>
+  </>
+);
+
+function HomePage() {
+  const { data: authorList, initialLoading, initialError } = useQuery(
+    getAuthors
+  );
+  const [getAuthor, { loading, error, data }] = useLazyQuery(getAuthorDetails);
+
+  if (!authorList) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        textAlign: "center"
+      }}
+    >
+      <Preamble />
+      <h2>
+        As a treat, we've got some cool author recs Click on an author to see
+        some of their books:
+      </h2>
+      <div>
+        {authorList.authors.map(({ name }) => (
+          <Button
+            key={name}
+            isSelected={data && data.author.name === name}
+            onClick={() => {
+              getAuthor({ variables: { name } });
+            }}
+          >
+            {name}
+          </Button>
+        ))}
+      </div>
+      <div style={{ marginTop: "24px" }}>
+        {data ? (
+          <div>
+            <ul>
+              {data.author.books.map(({ title }) => (
+                <li style={{ listStyle: "none" }} key={title}>
+                  {title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export default HomePage;
 ```
 
-and it should print:
-
-> TODO add screenshot
+Ensure the `graphql-api` is up and running by executing the following command from the project root `cd services/graphql-api && yarn start`. Run `yarn start` from within `apps/next-app` and visit `http://localhost:3000` to see your new graphql app!
 
 ## Adding Manypkg to help validate your dependencies
 
 There are a _lot_ of subtle footguns to how dependencies are downloaded and installed and linked in a monorepo, with the deadliest being:
 
 - Installing a version of a package within your monorepo from npm instead of linking locally, breaking your dev loop
--
+
+Run the following commands from the project root
 
 ```shell
-yarn add @manypkg/cli
+yarn add @manypkg/cli -W
 yarn manypkg check
 yarn manypkg fix
 ```
@@ -411,10 +508,6 @@ Once you've installed `manypkg`, and fixed your project, you should add `manypkg
 ```
 
 This should give you a large amount of peace-of-mind about your installs. Just make sure after running `manypkg fix` you run `yarn` to install based off any changes that occurred.
-
-> Build in something that needs fixing
-> Demonstrate manypkg exec as well
-> What's the best simple example of a command we want to exec?
 
 ## Setting up a publishing workflow
 
@@ -441,7 +534,7 @@ yarn changeset add
 
 This prompts a series of questions allowing you to select what package is changed, the kind of (semver) change it is, and a description of the change. For now, select `simple-package` and give it a `major` bump type.
 
-Note the descriptions will end up in the READMEs of the packages.
+Note the descriptions will end up in the CHANGELOGs of the packages.
 
 Next we run:
 
@@ -463,6 +556,4 @@ yarn preconstruct build && yarn changeset publish
 
 > It's a good idea to alias this as a node script: `"release": "yarn preconstruct build && yarn changeset publish"`
 
-## Setting up Jest and Babel
-
-Now that we've got a bit of code, we should add some tests
+The link to the complete `monorepo-starter` can be found [here](https://github.com/Thinkmill/monorepo-starter)
