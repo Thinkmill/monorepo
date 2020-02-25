@@ -532,7 +532,7 @@ Changesets works by allowing contributors to add changesets that document the in
 yarn changeset add
 ```
 
-This prompts a series of questions allowing you to select what package is changed, the kind of (semver) change it is, and a description of the change. For now, select `simple-package` and give it a `major` bump type.
+This prompts a series of questions allowing you to select what package is changed, the kind of (semver) change it is, and a description of the change. For now, select `@monorepo-starter/button` and give it a `major` bump type.
 
 Note the descriptions will end up in the CHANGELOGs of the packages.
 
