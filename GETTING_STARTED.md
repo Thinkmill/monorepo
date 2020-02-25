@@ -537,7 +537,7 @@ cd services/graphql-api
 yarn start
 ```
 
-Run the following command and visit `http://localhost:3000` to see your new graphql app!
+Open another terminal and run the following command and visit `http://localhost:3000` to see your new graphql app!
 
 ```shell
 cd apps/next-app
