@@ -970,7 +970,9 @@ export default ({ page: Page, item: { href, ...props } }) => (
             }
           `}
         >
-          <Page />
+          <div css={{ padding: 8 }}>
+            <Page />
+          </div>
           <hr css={{ marginTop: "60px !important" }} />
         </div>
       </div>

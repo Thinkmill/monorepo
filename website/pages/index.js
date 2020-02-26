@@ -196,8 +196,8 @@ export default function Index() {
         </Item>
       </section>
       <section css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap" }}>
-        {Object.values(items).map(props => (
-          <Item {...props} />
+        {Object.values(items).map((props, i) => (
+          <Item key={i} {...props} />
         ))}
       </section>
       <svg viewBox="0 0 10 1" css={{ transform: "translateY(4px)" }}>
