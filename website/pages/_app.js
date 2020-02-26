@@ -3,6 +3,8 @@ import { Global, jsx, css } from "@emotion/core";
 import { Fragment } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { CodeBlock } from "../components/code-block";
+import Router from "next/router";
+import withGA from "next-ga";
 
 let components = {
   code: CodeBlock,
@@ -38,4 +40,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default withGA("UA-159174172-1", Router)(MyApp);
