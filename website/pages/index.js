@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx, Global } from "@emotion/core";
+import Link from "next/link";
 
 let H1 = props => (
   <h1
@@ -12,6 +13,17 @@ let H1 = props => (
     {...props}
   />
 );
+
+let P = props => {
+  return (
+    <p
+      {...props}
+      css={{
+        fontSize: 24
+      }}
+    />
+  );
+};
 
 let H2 = props => (
   <h2
@@ -32,7 +44,7 @@ let scaleStyles = {
   }
 };
 
-let Item = ({
+export let Item = ({
   children,
   icon,
   href,
@@ -43,7 +55,7 @@ let Item = ({
 }) => {
   let Tag = href ? "a" : "div";
   let Heading = level === 1 ? H1 : H2;
-  return (
+  let stuff = (
     <Tag
       href={href}
       css={{
@@ -100,6 +112,14 @@ let Item = ({
       </div>
     </Tag>
   );
+  if (!href || href.startsWith("http")) {
+    return stuff;
+  }
+  return (
+    <Link href={href} passHref>
+      {stuff}
+    </Link>
+  );
 };
 
 let articleItemStyles = {
@@ -109,72 +129,76 @@ let articleItemStyles = {
   flexGrow: 1
 };
 
+export let items = {
+  gettingStarted: {
+    css: articleItemStyles,
+    title: "Getting Started",
+    icon: "🚀",
+    href: "/getting-started",
+    children: (
+      <P>
+        Thinkmill has compiled all of our knowledge about monorepos into a style
+        guide to share how we build monorepos.
+      </P>
+    )
+  },
+  why: {
+    css: articleItemStyles,
+    title: "Why Monorepos?",
+    icon: "🔍",
+    href: "/why-monorepos",
+    children: (
+      <P>
+        Wondering why you should use a monorepo? Read this to learn why you
+        might want to use a monorepo.
+      </P>
+    )
+  },
+  thinking: {
+    css: articleItemStyles,
+    title: "Thinking in monorepos",
+    href: "/thinking-in-monorepos",
+    icon: "🤔",
+    children: (
+      <P>
+        Are you often wondering how you should do a particular thing in a
+        monorepo should often? This should answer those questions
+      </P>
+    )
+  },
+  starter: {
+    css: articleItemStyles,
+    title: "Starter",
+    icon: "🧳",
+    children: (
+      <P>Want to get started in a monorepo right away? Try our starter repo!</P>
+    )
+  }
+};
+
 export default function Index() {
   return (
     <div
       css={{
-        p: {
-          fontSize: 24
-        },
         display: "flex",
         alignItems: "center",
         flexDirection: "column"
       }}
     >
       <section css={{ maxWidth: 800 }}>
-        <Item level={1} title="Monorepo Style Guide" icon="🚝">
-          <p>
+        <Item href="/" level={1} title="Monorepo Style Guide" icon="🚝">
+          <P>
             Thinkmill has been finding monorepos a very useful model for
             organising our projects so we've written some articles and resources
             to help others explore this space and learn from others doing
             similar things.
-          </p>
+          </P>
         </Item>
       </section>
       <section css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap" }}>
-        <Item
-          css={articleItemStyles}
-          title="Getting Started"
-          href="https://github.com/Thinkmill/monorepo"
-          icon="🚀"
-        >
-          <p>
-            Thinkmill has compiled all of our knowledge about monorepos into a
-            style guide to share how we build monorepos.
-          </p>
-        </Item>
-        <Item
-          css={articleItemStyles}
-          title="Why Monorepos?"
-          href="https://github.com/Thinkmill/monorepo"
-          icon="🔍"
-        >
-          <p>
-            Wondering why you should use a monorepo? Read this to learn why you
-            might want to use a monorepo.
-          </p>
-        </Item>
-        <Item
-          css={articleItemStyles}
-          title="Thinking in monorepos"
-          href="https://github.com/Thinkmill/monorepo"
-          icon="🤔"
-        >
-          <p>
-            Are you often wondering how you should do a particular thing in a
-            monorepo should often? This should answer these questions
-          </p>
-        </Item>
-        <Item
-          css={articleItemStyles}
-          title="Starter"
-          href="https://github.com/Thinkmill/monorepo-starter"
-          icon="🧳"
-        >
-          <p>
-            Want to get started in a monorepo right away? Try our starter repo!
-          </p>
-        </Item>
+        {Object.values(items).map(props => (
+          <Item {...props} />
+        ))}
       </section>
       <svg viewBox="0 0 10 1" css={{ transform: "translateY(4px)" }}>
         <path fill="#1D263B" d="M0 0.6L0 1 10 1 10 0z" />
@@ -192,40 +216,40 @@ export default function Index() {
       >
         <div css={{ maxWidth: 780 }}>
           <Item level={1} title="Tools" icon="🧰">
-            <p>
+            <P>
               Thinkmill maintains a number of tools to make working in monorepos
               easier
-            </p>
+            </P>
           </Item>
           <Item
             title="Changesets"
             href="https://github.com/changesets/changesets"
             icon="🦋"
           >
-            <p>
+            <P>
               Changesets is a tool to help versioning monorepos by letting
               contributors declare their changes and automate releases
-            </p>
+            </P>
           </Item>
           <Item
             title="Preconstruct"
             href="https://preconstruct.tools"
             icon="🎁"
           >
-            <p>
+            <P>
               Preconstruct is a tool to solve the problem of bundling and
               developing packages in a monorepo
-            </p>
+            </P>
           </Item>
           <Item
             title="Manypkg"
             href="https://github.com/Thinkmill/manypkg"
             icon="☔️"
           >
-            <p>
+            <P>
               Manypkg is an umbrella for your monorepo to help solve common
               problems like running scripts and enforcing rules on your monorepo
-            </p>
+            </P>
           </Item>
 
           <a

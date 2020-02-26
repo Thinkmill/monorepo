@@ -1,9 +1,9 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
+import { Fragment } from "react";
 import GettingStarted from "../../GETTING_STARTED.md";
+import Index, { items } from ".";
+import Article from "../components/article";
 
 export default () => (
-  <section css={{ maxWidth: 800 }}>
-    <GettingStarted />
-  </section>
+  <Article item={items.gettingStarted} page={GettingStarted} />
 );

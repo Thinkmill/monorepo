@@ -1,11 +1,12 @@
 /** @jsx jsx */
-import { Global, jsx } from "@emotion/core";
+import { Global, jsx, css } from "@emotion/core";
 import { Fragment } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { CodeBlock } from "../components/code-block";
 
 let components = {
-  code: CodeBlock
+  code: CodeBlock,
+  h1: () => null
 };
 
 function MyApp({ Component, pageProps }) {

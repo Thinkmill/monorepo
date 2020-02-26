@@ -5,8 +5,8 @@
 
 export const theme = {
   plain: {
-    backgroundColor: "rgb(29,38,59)",
-    color: "#FF3E59"
+    backgroundColor: "#2a2734",
+    color: "#9a86fd"
   },
   styles: [
     {
@@ -30,7 +30,7 @@ export const theme = {
     {
       types: ["property", "function"],
       style: {
-        color: "#FF3E59"
+        color: "#9a86fd"
       }
     },
     {
