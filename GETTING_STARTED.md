@@ -264,7 +264,7 @@ Install the button package by adding
 "@monorepo-starter/button": "1.0.0",
 ```
 
-to the dependencies of the `package.json` and the following command:
+to the dependencies of the `package.json` and run the following command:
 
 ```shell
 # in the project root
