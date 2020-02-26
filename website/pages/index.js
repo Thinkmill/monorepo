@@ -169,6 +169,7 @@ export let items = {
     css: articleItemStyles,
     title: "Starter",
     icon: "🧳",
+    href: "https://github.com/Thinkmill/monorepo-starter",
     children: (
       <P>Want to get started in a monorepo right away? Try our starter repo!</P>
     )
