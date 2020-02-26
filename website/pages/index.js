@@ -85,7 +85,7 @@ export let Item = ({
         </Heading>
         <div
           css={{
-            fontSize: 80,
+            fontSize: 60,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -124,7 +124,6 @@ export let Item = ({
 
 let articleItemStyles = {
   flexBasis: "50%",
-  minWidth: 400,
   flexShrink: 1,
   flexGrow: 1
 };
@@ -185,7 +184,7 @@ export default function Index() {
         flexDirection: "column"
       }}
     >
-      <section css={{ maxWidth: 800 }}>
+      <section css={{ maxWidth: 800, minWidth: 0 }}>
         <Item href="/" level={1} title="Monorepo Style Guide" icon="🚝">
           <P>
             Thinkmill has been finding monorepos a very useful model for
@@ -195,7 +194,9 @@ export default function Index() {
           </P>
         </Item>
       </section>
-      <section css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap" }}>
+      <section
+        css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap", minWidth: 0 }}
+      >
         {Object.values(items).map((props, i) => (
           <Item key={i} {...props} />
         ))}
@@ -214,7 +215,7 @@ export default function Index() {
           flexDirection: "column"
         }}
       >
-        <div css={{ maxWidth: 780 }}>
+        <div css={{ maxWidth: 780, minWidth: 0 }}>
           <Item level={1} title="Tools" icon="🧰">
             <P>
               Thinkmill maintains a number of tools to make working in monorepos

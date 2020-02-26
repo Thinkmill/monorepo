@@ -6,7 +6,7 @@ import Index, { items, Item } from "../pages";
 export default ({ page: Page, item: { href, ...props } }) => (
   <Fragment>
     <section css={{ display: "flex", justifyContent: "center" }}>
-      <div css={{ maxWidth: 800 }}>
+      <div css={{ width: "100%", maxWidth: 800, minWidth: 0 }}>
         <Item {...props} />
         <div
           // https://github.com/sindresorhus/github-markdown-css
@@ -118,7 +118,6 @@ export default ({ page: Page, item: { href, ...props } }) => (
               font-family: monospace, monospace;
               font-size: 1em;
             }
-
             hr {
               box-sizing: initial;
               height: 0;

@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }) {
       <Global
         styles={{
           body: {
+            overflowX: "hidden",
             fontFamily:
               "-apple-system, BlinkMacSystemFont, Helvetica, sans-serif",
             padding: 0,
