@@ -4,7 +4,10 @@ import { jsx, Global } from "@emotion/core";
 let H1 = props => (
   <h1
     css={{
-      fontSize: 80
+      fontSize: 52,
+      "@media (mid-width: 800px)": {
+        fontSize: 80
+      }
     }}
     {...props}
   />
@@ -13,7 +16,10 @@ let H1 = props => (
 let H2 = props => (
   <h2
     css={{
-      fontSize: 48
+      fontSize: 48,
+      "@media (mid-width: 800px)": {
+        fontSize: 64
+      }
     }}
     {...props}
   />
@@ -26,34 +32,81 @@ let scaleStyles = {
   }
 };
 
-let Item = ({ children, icon, href, mode = "dark" }) => {
+let Item = ({
+  children,
+  icon,
+  href,
+  title,
+  mode = "dark",
+  level = 2,
+  className
+}) => {
   let Tag = href ? "a" : "div";
+  let Heading = level === 1 ? H1 : H2;
   return (
     <Tag
       href={href}
       css={{
-        display: "flex",
-        justifyContent: "space-between",
+        display: "block",
         borderRadius: 10,
         padding: 16,
         textDecoration: "none",
         color: "inherit",
         ...(href && scaleStyles)
       }}
+      className={className}
     >
-      <div>{children}</div>
       <div
         css={{
-          fontSize: 128,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr"
         }}
       >
-        {icon}
+        <Heading
+          css={{
+            "@media (min-width: 800px)": {
+              gridColumnEnd: "span 2"
+            }
+          }}
+        >
+          {title}
+        </Heading>
+        <div
+          css={{
+            fontSize: 80,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            "@media (min-width: 800px)": {
+              fontSize: 128,
+              gridColumnStart: "2",
+              gridRowStart: "2"
+            }
+          }}
+        >
+          {icon}
+        </div>
+        <div
+          css={{
+            gridColumnEnd: "span 2",
+            "@media (min-width: 800px)": {
+              gridRowStart: "2",
+              gridColumnEnd: "span 1"
+            }
+          }}
+        >
+          {children}
+        </div>
       </div>
     </Tag>
   );
+};
+
+let articleItemStyles = {
+  flexBasis: "50%",
+  minWidth: 400,
+  flexShrink: 1,
+  flexGrow: 1
 };
 
 export default function Index() {
@@ -69,27 +122,57 @@ export default function Index() {
       }}
     >
       <section css={{ maxWidth: 800 }}>
-        <H1>👋 Let's build with Monorepos!</H1>
-        <Item href="https://github.com/Thinkmill/monorepo" icon="📖">
-          <H2>Style Guide</H2>
+        <Item level={1} title="Monorepo Style Guide" icon="🚝">
+          <p>
+            Thinkmill has been finding monorepos a very useful model for
+            organising our projects so we've written some articles and resources
+            to help others explore this space and learn from others doing
+            similar things.
+          </p>
+        </Item>
+      </section>
+      <section css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap" }}>
+        <Item
+          css={articleItemStyles}
+          title="Getting Started"
+          href="https://github.com/Thinkmill/monorepo"
+          icon="🚀"
+        >
           <p>
             Thinkmill has compiled all of our knowledge about monorepos into a
             style guide to share how we build monorepos.
           </p>
         </Item>
-        <Item href="https://github.com/Thinkmill/monorepo-starter" icon="🧳">
-          <H2>Starter</H2>
+        <Item
+          css={articleItemStyles}
+          title="Why Monorepos?"
+          href="https://github.com/Thinkmill/monorepo"
+          icon="🔍"
+        >
           <p>
-            We've taken all of our knowledge about monorepos and built a repo
-            that you can started with right away.
+            Wondering why you should use a monorepo? Read this to learn why you
+            might want to use a monorepo.
           </p>
         </Item>
-        <Item icon="🏗">
-          <H2>Builder</H2>
+        <Item
+          css={articleItemStyles}
+          title="Thinking in monorepos"
+          href="https://github.com/Thinkmill/monorepo"
+          icon="🤔"
+        >
           <p>
-            We're creating a monorepo builder that will let you specify what you
-            want your monorepo to look like and give you a ready to use
-            monorepo.
+            Are you often wondering how you should do a particular thing in a
+            monorepo should often? This should answer these questions
+          </p>
+        </Item>
+        <Item
+          css={articleItemStyles}
+          title="Starter"
+          href="https://github.com/Thinkmill/monorepo-starter"
+          icon="🧳"
+        >
+          <p>
+            Want to get started in a monorepo right away? Try our starter repo!
           </p>
         </Item>
       </section>
@@ -108,29 +191,37 @@ export default function Index() {
         }}
       >
         <div css={{ maxWidth: 780 }}>
-          <Item icon="🧰">
-            <H1 css={{ marginTop: 0 }}>Tools</H1>
+          <Item level={1} title="Tools" icon="🧰">
             <p>
               Thinkmill maintains a number of tools to make working in monorepos
               easier
             </p>
           </Item>
-          <Item href="https://github.com/changesets/changesets" icon="🦋">
-            <H2>Changesets</H2>
+          <Item
+            title="Changesets"
+            href="https://github.com/changesets/changesets"
+            icon="🦋"
+          >
             <p>
               Changesets is a tool to help versioning monorepos by letting
               contributors declare their changes and automate releases
             </p>
           </Item>
-          <Item href="https://preconstruct.tools" icon="🎁">
-            <H2>Preconstruct</H2>
+          <Item
+            title="Preconstruct"
+            href="https://preconstruct.tools"
+            icon="🎁"
+          >
             <p>
               Preconstruct is a tool to solve the problem of bundling and
               developing packages in a monorepo
             </p>
           </Item>
-          <Item href="https://github.com/Thinkmill/manypkg" icon="☔️">
-            <H2>Manypkg</H2>
+          <Item
+            title="Manypkg"
+            href="https://github.com/Thinkmill/manypkg"
+            icon="☔️"
+          >
             <p>
               Manypkg is an umbrella for your monorepo to help solve common
               problems like running scripts and enforcing rules on your monorepo

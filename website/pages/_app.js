@@ -23,6 +23,9 @@ function MyApp({ Component, pageProps }) {
           "pre,code": {
             fontFamily:
               "source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace"
+          },
+          "*": {
+            boxSizing: "border-box"
           }
         }}
       />
