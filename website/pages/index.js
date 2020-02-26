@@ -60,31 +60,21 @@ export default function Index() {
   return (
     <div
       css={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
         p: {
           fontSize: 24
-        }
+        },
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column"
       }}
     >
-      <Global
-        styles={{
-          body: {
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, Helvetica, sans-serif",
-            padding: 0,
-            margin: 0
-          }
-        }}
-      />
       <section css={{ maxWidth: 800 }}>
         <H1>👋 Let's build with Monorepos!</H1>
         <Item href="https://github.com/Thinkmill/monorepo" icon="📖">
           <H2>Style Guide</H2>
           <p>
-            We've compiled all of our knowledge about monorepos into a style
-            guide to share how we build monorepos.
+            Thinkmill has compiled all of our knowledge about monorepos into a
+            style guide to share how we build monorepos.
           </p>
         </Item>
         <Item href="https://github.com/Thinkmill/monorepo-starter" icon="🧳">
