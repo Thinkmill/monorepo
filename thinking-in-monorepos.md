@@ -1,3 +1,5 @@
+# Thinking in Monorepos
+
 > I've assumed in this article that you are already familiar with monorepos, and are looking for help on how to get the most out of them. If you're still not sure what monorepos are, or why you might want one, check out [why monorepos](./why-monorepos.md)
 
 "Where do I install this package?"
@@ -41,4 +43,4 @@ I thoroughly encourage you to experiment, and find the abstractions that work fo
 
 ## Now you're thinking in monorepos
 
-With these ideas at the ready, you should be prepared to answer the questions that come up while working on, or even managing! a monorepo. If you want more information, checkout our [monorepo guide](<[https://monorepo.guide/](https://monorepo.guide/)>)
+With these ideas at the ready, you should be prepared to answer the questions that come up while working on, or even managing! a monorepo. If you want more information, checkout our [monorepo guide](https://monorepo.guide)
