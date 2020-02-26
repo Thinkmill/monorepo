@@ -7,7 +7,8 @@ import { H1, H2, H3 } from "./text";
 let scaleStyles = {
   transition: "ease-in-out transform 100ms",
   ":hover": {
-    transform: "scale(1.04)"
+    transform: "scale(1.04)",
+    boxShadow: "0px 6px 24px rgba(0,0,0,0.1)"
   }
 };
 
@@ -32,10 +33,7 @@ let Item = ({
         textDecoration: "none",
         color: "inherit",
         backgroundColor: mode === "dark" ? "#171E2F" : "#f8f8f8",
-        ...(href && scaleStyles),
-        "&:hover": {
-          boxShadow: "0px 6px 24px rgba(0,0,0,0.1)"
-        }
+        ...(href && scaleStyles)
       }}
       className={className}
     >
