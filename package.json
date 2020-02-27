@@ -6,12 +6,15 @@
   "private": true,
   "dependencies": {
     "doctoc": "^1.4.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3",
     "prettier": "^1.19.1"
   },
   "scripts": {
     "toc": "doctoc . --no-title && yarn format",
     "format": "prettier --write \"*.md\"",
-    "website:build": "cd website && yarn build"
+    "website:build": "cd website && yarn build",
+    "lint": "eslint ."
   },
   "prettier": {},
   "workspaces": [
