@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import Link from "next/link";
 import { string, oneOf } from "prop-types";
 
-import { H1, H3 } from "./text";
+import { H1, H3, P } from "./text";
 
 const scaleStyles = {
   transition: "ease-in-out transform 100ms",
