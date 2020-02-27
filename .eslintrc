@@ -1,0 +1,50 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "standard", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "standard/computed-property-even-spacing": "off",
+    "lines-between-class-members": "off",
+    "no-template-curly-in-string": "off",
+    "camelcase": "off",
+    "import/no-duplicates": "off",
+    "no-useless-constructor": "off",
+    "no-unusued-vars": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/__tests__/**/*.{ts,js}",
+          "**/*.test.{ts,js}",
+          "**/test.{ts,js}"
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.test.js",
+        "**/__tests__/**",
+        "*.test.ts",
+        "**/test.ts",
+        "**/test-utils/**/*"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}
