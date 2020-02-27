@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Global, jsx, css } from "@emotion/core";
+import { Global, jsx } from "@emotion/core";
 import { Fragment } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { CodeBlock } from "../components/code-block";
