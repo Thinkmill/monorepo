@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { Fragment } from "react";
-import Index, { items, Item } from "../pages";
-
+import { Index, items } from "../pages";
+import Item from "../components/item";
 export default ({ page: Page, item: { href, ...props } }) => (
   <Fragment>
     <section css={{ display: "flex", justifyContent: "center" }}>
       <div css={{ width: "100%", maxWidth: 800, minWidth: 0 }}>
-        <Item {...props} />
+        <Item {...props} level={1} />
         <div
           // https://github.com/sindresorhus/github-markdown-css
           css={css`
