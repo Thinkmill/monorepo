@@ -19,20 +19,20 @@ export let items = {
     icon: "🔍",
     href: "/why-monorepos",
     desc:
-      "Why monorepos? What are the benefits? Read on to learn why you should use a monorepo."
+      "Why monorepos? What are the benefits? Read this to learn why you should use a monorepo."
   },
   thinking: {
     title: "Thinking in monorepos",
     href: "/thinking-in-monorepos",
     icon: "🤔",
     desc:
-      "Monorepos offer a lot of new ways to work, but when you first get started working in one, it can be daunting. Read on to learn about the monorepo mindset."
+      "Monorepos offer a lot of new ways to work, but when you first get started working in one, it can be daunting. Read this to learn how to think in monorepos."
   },
   starter: {
     title: "Starter",
     icon: "🧳",
     href: "https://github.com/Thinkmill/monorepo-starter",
-    desc: "Ready to jump in? Try our starter repo and get start right away."
+    desc: "Ready to jump in? Try our starter repo and get started right away."
   }
 };
 
