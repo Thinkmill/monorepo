@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
-export let H1 = props => (
+export const H1 = props => (
   <h1
     css={{
       fontSize: 52,
@@ -13,7 +13,7 @@ export let H1 = props => (
   />
 );
 
-export let P = props => {
+export const P = props => {
   return (
     <p
       {...props}
@@ -24,7 +24,7 @@ export let P = props => {
   );
 };
 
-export let H2 = props => (
+export const H2 = props => (
   <h2
     css={{
       fontSize: 48,
@@ -36,7 +36,7 @@ export let H2 = props => (
   />
 );
 
-export let H3 = props => (
+export const H3 = props => (
   <h2
     css={{
       fontSize: 32,

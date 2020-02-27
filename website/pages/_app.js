@@ -6,7 +6,7 @@ import { CodeBlock } from "../components/code-block";
 import Router from "next/router";
 import withGA from "next-ga";
 
-let components = {
+const components = {
   code: CodeBlock,
   h1: () => null
 };

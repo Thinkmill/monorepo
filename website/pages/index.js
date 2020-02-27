@@ -5,7 +5,7 @@ import { H1, H2, P } from "../components/text";
 import Item from "../components/item";
 import Footer from "../components/footer";
 
-export let items = {
+export const items = {
   gettingStarted: {
     title: "Getting Started",
     icon: "🚀",

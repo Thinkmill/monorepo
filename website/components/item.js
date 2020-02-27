@@ -3,9 +3,9 @@ import { jsx } from "@emotion/core";
 import Link from "next/link";
 import { string, oneOf } from "prop-types";
 
-import { H1, H3, P } from "./text";
+import { H1, H3 } from "./text";
 
-let scaleStyles = {
+const scaleStyles = {
   transition: "ease-in-out transform 100ms",
   ":hover": {
     transform: "scale(1.04)",
@@ -13,7 +13,7 @@ let scaleStyles = {
   }
 };
 
-let Item = ({
+const Item = ({
   desc,
   icon,
   href,
@@ -22,9 +22,9 @@ let Item = ({
   level = 2,
   className
 }) => {
-  let Tag = href ? "a" : "div";
-  let Heading = level === 1 ? H1 : H3;
-  let stuff = (
+  const Tag = href ? "a" : "div";
+  const Heading = level === 1 ? H1 : H3;
+  const stuff = (
     <Tag
       href={href}
       css={{
