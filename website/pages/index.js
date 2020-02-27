@@ -1,6 +1,5 @@
 /** @jsx jsx */
-import { jsx, Global } from "@emotion/core";
-import Link from "next/link";
+import { jsx } from "@emotion/core";
 
 import { H1, H2, P } from "../components/text";
 import Item from "../components/item";
@@ -71,7 +70,7 @@ export const Index = () => (
     <section
       css={{ maxWidth: 1200, display: "flex", flexWrap: "wrap", minWidth: 0 }}
     >
-      {Object.values(items).map((props, i) => (
+      {Object.values(items).map((item, i) => (
         <div
           css={{
             display: "flex",
@@ -80,8 +79,9 @@ export const Index = () => (
             flexGrow: 1,
             padding: 4
           }}
+          key={item.title}
         >
-          <Item key={i} {...props} />
+          <Item key={i} {...item} />
         </div>
       ))}
     </section>
@@ -117,7 +117,7 @@ export const Index = () => (
   </div>
 );
 
-export default () => {
+const Home = () => {
   return (
     <>
       <section
@@ -143,3 +143,5 @@ export default () => {
     </>
   );
 };
+
+export default Home;

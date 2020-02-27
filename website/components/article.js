@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { Fragment } from "react";
-import { Index, items } from "../pages";
+import { Index } from "../pages";
 import Item from "../components/item";
-export default ({ page: Page, item: { href, ...props } }) => (
+import { node, shape, string } from "prop-types";
+
+const Article = ({ page: Page, item: { desc, icon, title } }) => (
   <Fragment>
     <section css={{ display: "flex", justifyContent: "center" }}>
       <div css={{ width: "100%", maxWidth: 800, minWidth: 0 }}>
-        <Item {...props} level={1} />
+        <Item desc={desc} icon={icon} title={title} level={1} />
         <div
           // https://github.com/sindresorhus/github-markdown-css
           css={css`
@@ -979,3 +981,15 @@ export default ({ page: Page, item: { href, ...props } }) => (
     <Index />
   </Fragment>
 );
+
+Article.propTypes = {
+  page: node,
+  item: shape({
+    desc: string,
+    href: string,
+    icon: string,
+    title: string
+  })
+};
+
+export default Article;

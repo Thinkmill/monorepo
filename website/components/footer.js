@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
-export default () => (
+const Footer = () => (
   <a
     href="https://thinkmill.com.au"
     title="Thinkmill"
@@ -41,3 +41,5 @@ export default () => (
     </div>
   </a>
 );
+
+export default Footer;

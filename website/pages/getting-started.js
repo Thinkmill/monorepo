@@ -1,9 +1,10 @@
 import React from "react";
-import { Fragment } from "react";
 import GettingStarted from "../../GETTING_STARTED.md";
-import Index, { items } from ".";
+import { items } from ".";
 import Article from "../components/article";
 
-export default () => (
+const GettingStartedPage = () => (
   <Article item={items.gettingStarted} page={GettingStarted} />
 );
+
+export default GettingStartedPage;
