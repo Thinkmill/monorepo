@@ -85,7 +85,7 @@ export const Index = () => (
         </div>
       ))}
     </section>
-    <svg viewBox="0 0 10 1" css={{ transform: "translateY(4px)" }}>
+    <svg viewBox="0 0 10 1" css={{ transform: "translateY(4px) scale(1.01)" }}>
       <path fill="#1D263B" d="M0 0.6L0 1 10 1 10 0z" />
     </svg>
     <section
