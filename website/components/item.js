@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core";
 import Link from "next/link";
 
-import { H1, H2, H3 } from "./text";
+import { H1, H2, H3, P } from "./text";
 
 let scaleStyles = {
   transition: "ease-in-out transform 100ms",
@@ -13,7 +13,7 @@ let scaleStyles = {
 };
 
 let Item = ({
-  children,
+  desc,
   icon,
   href,
   title,
@@ -29,7 +29,7 @@ let Item = ({
       css={{
         display: "block",
         borderRadius: 24,
-        padding: 16,
+        padding: 24,
         margin: 8,
         textDecoration: "none",
         color: "inherit",
@@ -77,7 +77,7 @@ let Item = ({
             }
           }}
         >
-          {children}
+          <P css={{ margin: 0 }}>{desc}</P>
         </div>
       </div>
     </Tag>

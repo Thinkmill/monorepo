@@ -11,42 +11,28 @@ export let items = {
     title: "Getting Started",
     icon: "🚀",
     href: "/getting-started",
-    children: (
-      <P>
-        Thinkmill has compiled all of our knowledge about monorepos into a style
-        guide to share how we build monorepos.
-      </P>
-    )
+    desc:
+      "Thinkmill has compiled all of our knowledge about monorepos into a style guide to share how we build monorepos."
   },
   why: {
     title: "Why Monorepos?",
     icon: "🔍",
     href: "/why-monorepos",
-    children: (
-      <P>
-        Wondering why you should use a monorepo? Read this to learn why you
-        might want to use a monorepo.
-      </P>
-    )
+    desc:
+      "Wondering why you should use a monorepo? Read this to learn why you might want to use a monorepo."
   },
   thinking: {
     title: "Thinking in monorepos",
     href: "/thinking-in-monorepos",
     icon: "🤔",
-    children: (
-      <P>
-        Are you often wondering how you should do a particular thing in a
-        monorepo should often? This should answer those questions
-      </P>
-    )
+    desc:
+      "Are you often wondering how you should do a particular thing in a monorepo should often? This should answer those questions"
   },
   starter: {
     title: "Starter",
     icon: "🧳",
     href: "https://github.com/Thinkmill/monorepo-starter",
-    children: (
-      <P>Want to get started in a monorepo right away? Try our starter repo!</P>
-    )
+    desc: "Want to get started in a monorepo right away? Try our starter repo!"
   }
 };
 
@@ -113,7 +99,7 @@ export const Index = () => (
       }}
     >
       <div css={{ maxWidth: 780, minWidth: 0 }}>
-        <div css={{ paddingLeft: 24, paddingRight: 24 }}>
+        <div css={{ paddingLeft: 32, paddingRight: 32 }}>
           <H2>Tools 🧰</H2>
           <P>
             Thinkmill maintains a number of tools to make working in monorepos
@@ -122,9 +108,7 @@ export const Index = () => (
         </div>
 
         {tools.map((props, i) => (
-          <Item key={i} mode="dark" css={{ marginBottom: 16 }} {...props}>
-            <P>{props.desc}</P>
-          </Item>
+          <Item key={i} mode="dark" css={{ marginBottom: 16 }} {...props} />
         ))}
 
         <Footer />
@@ -144,7 +128,7 @@ export default () => {
           minWidth: 0
         }}
       >
-        <div css={{ maxWidth: 800, padding: 24 }}>
+        <div css={{ maxWidth: 800, padding: 32 }}>
           <H1>Monorepo Style Guide 🚝</H1>
 
           <P>
