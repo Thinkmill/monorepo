@@ -12,27 +12,27 @@ export let items = {
     icon: "🚀",
     href: "/getting-started",
     desc:
-      "Thinkmill has compiled all of our knowledge about monorepos into a style guide to share how we build monorepos."
+      "We’ve compiled a step-by-step guide for setting up your first monorepo."
   },
   why: {
     title: "Why Monorepos?",
     icon: "🔍",
     href: "/why-monorepos",
     desc:
-      "Wondering why you should use a monorepo? Read this to learn why you might want to use a monorepo."
+      "Why monorepos? What are the benefits? Read on to learn why you should use a monorepo."
   },
   thinking: {
     title: "Thinking in monorepos",
     href: "/thinking-in-monorepos",
     icon: "🤔",
     desc:
-      "Are you often wondering how you should do a particular thing in a monorepo should often? This should answer those questions"
+      "Monorepos offer a lot of new ways to work, but when you first get started working in one, it can be daunting. Read on to learn about the monorepo mindset."
   },
   starter: {
     title: "Starter",
     icon: "🧳",
     href: "https://github.com/Thinkmill/monorepo-starter",
-    desc: "Want to get started in a monorepo right away? Try our starter repo!"
+    desc: "Ready to jump in? Try our starter repo and get start right away."
   }
 };
 
@@ -133,10 +133,9 @@ export default () => {
           <H1 css={{ margin: 0 }}>Monorepo Style Guide 🚝</H1>
 
           <P>
-            Thinkmill has been finding monorepos a very useful model for
-            organising our projects so we've written some articles and resources
-            to help others explore this space and learn from others doing
-            similar things.
+            At Thinkmill, monorepos have proven to be a very useful model for
+            organising our projects. We’ve written some articles and resources
+            to help you explore this space.
           </P>
         </div>
       </section>
