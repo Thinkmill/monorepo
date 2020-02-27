@@ -42,7 +42,7 @@ const tools = [
     href: "https://github.com/changesets/changesets",
     icon: "🦋",
     desc:
-      "Changesets is a tool to help versioning monorepos by letting contributors declare their changes and automate releases"
+      "Changesets is a tool to help with versioning monorepos, by letting contributors declare their changes and automate releases"
   },
   {
     title: "Preconstruct",
@@ -74,6 +74,7 @@ export const Index = () => (
       {Object.values(items).map((props, i) => (
         <div
           css={{
+            display: "flex",
             flexBasis: "50%",
             flexShrink: 1,
             flexGrow: 1,
@@ -129,7 +130,7 @@ export default () => {
         }}
       >
         <div css={{ maxWidth: 800, padding: 32 }}>
-          <H1>Monorepo Style Guide 🚝</H1>
+          <H1 css={{ margin: 0 }}>Monorepo Style Guide 🚝</H1>
 
           <P>
             Thinkmill has been finding monorepos a very useful model for

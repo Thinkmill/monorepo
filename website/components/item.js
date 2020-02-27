@@ -27,14 +27,15 @@ let Item = ({
     <Tag
       href={href}
       css={{
-        display: "block",
+        display: "flex",
         borderRadius: 24,
         padding: 24,
         margin: 8,
         textDecoration: "none",
         color: "inherit",
         backgroundColor: mode === "dark" ? "#171E2F" : "#ffffff",
-        ...(href && scaleStyles)
+        ...(href && scaleStyles),
+        flex: 1
       }}
       className={className}
     >
