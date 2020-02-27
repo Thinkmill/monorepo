@@ -103,8 +103,7 @@ export const Index = () => (
         <div css={{ paddingLeft: 32, paddingRight: 32 }}>
           <H2>Tools 🧰</H2>
           <P>
-            Thinkmill maintains a number of tools to make working in monorepos
-            easier
+            We maintain a number of tools to make working in monorepos easier
           </P>
         </div>
 
