@@ -33,7 +33,7 @@ let Item = ({
         margin: 8,
         textDecoration: "none",
         color: "inherit",
-        backgroundColor: mode === "dark" ? "#171E2F" : "#f8f8f8",
+        backgroundColor: mode === "dark" ? "#171E2F" : "#ffffff",
         ...(href && scaleStyles)
       }}
       className={className}

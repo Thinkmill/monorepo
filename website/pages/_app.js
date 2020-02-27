@@ -21,7 +21,8 @@ function MyApp({ Component, pageProps }) {
             fontFamily:
               "-apple-system, BlinkMacSystemFont, Helvetica, sans-serif",
             padding: 0,
-            margin: 0
+            margin: 0,
+            backgroundColor: "#f8f8f8"
           },
 
           "pre,code": {
