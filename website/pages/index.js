@@ -113,14 +113,16 @@ export const Index = () => (
       }}
     >
       <div css={{ maxWidth: 780, minWidth: 0 }}>
-        <H2>Tools 🧰</H2>
-        <P>
-          Thinkmill maintains a number of tools to make working in monorepos
-          easier
-        </P>
+        <div css={{ paddingLeft: 24, paddingRight: 24 }}>
+          <H2>Tools 🧰</H2>
+          <P>
+            Thinkmill maintains a number of tools to make working in monorepos
+            easier
+          </P>
+        </div>
 
         {tools.map((props, i) => (
-          <Item key={i} mode="dark" css={{ marginBottom: "24px" }} {...props}>
+          <Item key={i} mode="dark" css={{ marginBottom: 16 }} {...props}>
             <P>{props.desc}</P>
           </Item>
         ))}
@@ -142,7 +144,7 @@ export default () => {
           minWidth: 0
         }}
       >
-        <div css={{ maxWidth: 800 }}>
+        <div css={{ maxWidth: 800, padding: 24 }}>
           <H1>Monorepo Style Guide 🚝</H1>
 
           <P>

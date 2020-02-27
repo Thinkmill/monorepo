@@ -30,6 +30,7 @@ let Item = ({
         display: "block",
         borderRadius: 24,
         padding: 16,
+        margin: 8,
         textDecoration: "none",
         color: "inherit",
         backgroundColor: mode === "dark" ? "#171E2F" : "#f8f8f8",
