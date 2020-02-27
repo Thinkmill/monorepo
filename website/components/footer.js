@@ -25,7 +25,7 @@ export default () => (
       }}
     >
       <span>
-        Made by{" "}
+        Made and maintained by{" "}
         <a
           css={{
             color: "white",
