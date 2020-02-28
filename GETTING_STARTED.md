@@ -195,7 +195,7 @@ yarn preconstruct init
 This will prompt you with some questions, you should answer with the following responses:
 
 ```
-🎁 ? @monorepo-starter/root what packages should preconstruct build? · packages/*
+🎁 ? @monorepo-starter/root what packages should preconstruct build? · packages/*,services/*
 🎁 ? @monorepo-starter/button preconstruct is going to change the main field in your package.json, are you okay with that? (Y/n) · true
 🎁 ? @monorepo-starter/button would you like to generate module builds? this will write to the module field in your package.json (Y/n) · true
 🎁 success initialised project!
