@@ -1,5 +1,3 @@
-> This getting started guide is a work in progress. Not all sections are complete, completed sections may be a bit rough.
-
 # Getting Started with Monorepos
 
 Hi! Welcome. This is a very quick tutorial to help you set up your own monorepo, a repository that includes multiple javascript packages, all managed by a root config. It aligns with our [monorepo style guide](./README.md), but is designed to walk you through the basics. If you want to have a better understanding of what decisions are being made for you, we recommend reading the guide after this tutorial.
@@ -266,7 +264,7 @@ Install the button package by adding
 "@monorepo-starter/button": "1.0.0",
 ```
 
-to the dependencies of the `package.json` and the following command:
+to the dependencies of the `package.json` and run the following command:
 
 ```shell
 # in the project root
