@@ -5,12 +5,17 @@ export default () => (
   <a
     href="https://thinkmill.com.au"
     title="Thinkmill"
+    rel="noopener"
+    target="_blank"
     css={{
       color: "white",
       textDecoration: "none",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      ":hover span": {
+        color: "#FF3838"
+      }
     }}
   >
     <div
@@ -26,17 +31,9 @@ export default () => (
     >
       <span>
         Created and maintained by{" "}
-        <a
-          css={{
-            color: "white",
-            ":hover": {
-              color: "#FF3838"
-            }
-          }}
-          href="https://thinkmill.com.au"
-        >
+        <span>
           Thinkmill
-        </a>
+        </span>
       </span>
     </div>
   </a>
