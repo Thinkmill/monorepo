@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import Link from "next/link";
-import { string, oneOf } from "prop-types";
 
 import { H1, H3, P } from "./text";
 
@@ -92,16 +91,6 @@ const Item = ({
       {stuff}
     </Link>
   );
-};
-
-Item.propTypes = {
-  desc: string,
-  href: string,
-  icon: string,
-  title: string,
-  mode: oneOf("light", "dark"),
-  level: oneOf(1, 2),
-  className: string
 };
 
 export default Item;

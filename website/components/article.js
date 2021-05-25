@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/core";
 import { Fragment } from "react";
 import { Index } from "../pages";
 import Item from "../components/item";
-import { node, shape, string } from "prop-types";
 
 const Article = ({ page: Page, item: { desc, icon, title } }) => (
   <Fragment>
@@ -981,15 +980,5 @@ const Article = ({ page: Page, item: { desc, icon, title } }) => (
     <Index />
   </Fragment>
 );
-
-Article.propTypes = {
-  page: node,
-  item: shape({
-    desc: string,
-    href: string,
-    icon: string,
-    title: string
-  })
-};
 
 export default Article;

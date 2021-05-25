@@ -16,14 +16,13 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-standard": "^4.0.1",
-    "prettier": "^1.19.1",
-    "prop-types": "^15.7.2"
+    "prettier": "^1.19.1"
   },
   "scripts": {
     "toc": "doctoc . --no-title && yarn format",
-    "prettier": "prettier --write \"**/*.{js,ts,tsx}\"",
-    "website:build": "cd website && yarn build",
-    "lint:eslint": "yarn eslint . --ext .ts,.tsx,.js"
+    "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "lint:eslint": "yarn eslint . --ext .ts,.tsx,.js",
+    "website:build": "cd website && yarn build"
   },
   "prettier": {},
   "workspaces": [
