@@ -25,7 +25,7 @@ const Footer = () => (
       }}
     >
       <span>
-        Made and maintained by{" "}
+        Created and maintained by{" "}
         <a
           css={{
             color: "white",
