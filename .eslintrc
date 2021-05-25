@@ -4,7 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "standard", "prettier"],
+  "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -22,16 +22,6 @@
     "import/no-duplicates": "off",
     "no-useless-constructor": "off",
     "no-unusued-vars": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/__tests__/**/*.{ts,js}",
-          "**/*.test.{ts,js}",
-          "**/test.{ts,js}"
-        ]
-      }
-    ],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   },
