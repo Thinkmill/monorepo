@@ -1,6 +1,5 @@
 /** @jsx jsx */
-import { jsx, Global } from "@emotion/core";
-import Link from "next/link";
+import { jsx } from "@emotion/core";
 
 import { H1, H2, P } from "../components/text";
 import Item from "../components/item";

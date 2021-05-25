@@ -1,20 +1,18 @@
 {
-  "name": "@thinkmill/monorepo",
-  "version": "0.0.0",
+  "name": "@thinkmill/monorepo-guide",
+  "version": "0.1.0",
   "repository": "https://github.com/Thinkmill/monorepo",
   "license": "MIT",
   "private": true,
-  "dependencies": {
-    "doctoc": "^1.4.0",
-    "prettier": "^1.19.1"
-  },
   "scripts": {
-    "toc": "doctoc . --no-title && yarn format",
-    "format": "prettier --write \"*.md\"",
-    "website:build": "cd website && yarn build"
+    "website": "yarn workspace @thinkmill/monorepo-website",
+    "docs": "yarn workspace @thinkmill/monorepo-docs",
+    "website:build": "yarn website build",
+    "website:start": "yarn docs:format && yarn website start",
+    "docs:format": "yarn docs format"
   },
-  "prettier": {},
   "workspaces": [
-    "website"
+    "website",
+    "docs"
   ]
 }
