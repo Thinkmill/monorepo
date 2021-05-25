@@ -17,19 +17,5 @@
     "prettier/prettier": "error",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
-  },
-  "overrides": [
-    {
-      "files": [
-        "*.test.js",
-        "**/__tests__/**",
-        "*.test.ts",
-        "**/test.ts",
-        "**/test-utils/**/*"
-      ],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
+  }
 }

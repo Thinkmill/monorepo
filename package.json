@@ -10,7 +10,7 @@
     "website:build": "yarn website build",
     "website:start": "yarn docs:format && yarn website start",
     "docs:format": "yarn docs format",
-    "lint": "yarn eslint . --ext .ts,.tsx,.js"
+    "lint": "yarn eslint . --ext ts,tsx,js"
   },
   "workspaces": [
     "website",
