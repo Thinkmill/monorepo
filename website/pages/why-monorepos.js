@@ -1,5 +1,5 @@
 import React from "react";
-import WhyMonorepos from '@thinkmill/monorepo-docs/src/why-monorepos.md';
+import WhyMonorepos from "@thinkmill/monorepo-docs/src/why-monorepos.md";
 import { items } from ".";
 import Article from "../components/article";
 

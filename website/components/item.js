@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core";
 import Link from "next/link";
 
-import { H1, H2, H3, P } from "./text";
+import { H1, H3, P } from "./text";
 
 let scaleStyles = {
   transition: "ease-in-out transform 100ms",

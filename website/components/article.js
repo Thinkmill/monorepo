@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { Fragment } from "react";
-import { Index, items } from "../pages";
+import { Index } from "../pages";
 import Item from "../components/item";
+
+// eslint-disable-next-line no-unused-vars
 export default ({ page: Page, item: { href, ...props } }) => (
   <Fragment>
     <section css={{ display: "flex", justifyContent: "center" }}>
