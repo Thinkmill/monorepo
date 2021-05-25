@@ -1,7 +1,6 @@
 import React from "react";
-import { Fragment } from "react";
-import Thinking from "../../thinking-in-monorepos.md";
-import Index, { items } from ".";
+import ThinkingInMonorepos from '@thinkmill/monorepo-docs/src/thinking-in-monorepos.md';
+import { items } from ".";
 import Article from "../components/article";
 
-export default () => <Article item={items.thinking} page={Thinking} />;
+export default () => <Article item={items.thinking} page={ThinkingInMonorepos} />;

@@ -1,7 +1,6 @@
 import React from "react";
-import { Fragment } from "react";
-import Why from "../../why-monorepos.md";
-import Index, { items } from ".";
+import WhyMonorepos from '@thinkmill/monorepo-docs/src/why-monorepos.md';
+import { items } from ".";
 import Article from "../components/article";
 
-export default () => <Article item={items.why} page={Why} />;
+export default () => <Article item={items.why} page={WhyMonorepos} />;

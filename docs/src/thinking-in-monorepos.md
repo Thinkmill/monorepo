@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Thinking in Monorepos](#thinking-in-monorepos)
+  - [A package is a package](#a-package-is-a-package)
+  - [Packages have strong boundaries](#packages-have-strong-boundaries)
+  - [Only global settings live at the root](#only-global-settings-live-at-the-root)
+  - [Splitting up packages is an art](#splitting-up-packages-is-an-art)
+  - [Now you're thinking in monorepos](#now-youre-thinking-in-monorepos)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Thinking in Monorepos
 
 > I've assumed in this article that you are already familiar with monorepos, and are looking for help on how to get the most out of them. If you're still not sure what monorepos are, or why you might want one, check out [why monorepos](./why-monorepos.md)

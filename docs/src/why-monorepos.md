@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Why Monorepos?](#why-monorepos)
+  - [For package authors](#for-package-authors)
+    - [Without a monorepo](#without-a-monorepo)
+    - [When we switch to a monorepo](#when-we-switch-to-a-monorepo)
+  - [But also for everyone else](#but-also-for-everyone-else)
+    - [Better API contracts](#better-api-contracts)
+  - [Having a well-defined structure makes it much easier to write meta-tools](#having-a-well-defined-structure-makes-it-much-easier-to-write-meta-tools)
+    - [It's easier to delete code](#its-easier-to-delete-code)
+  - [And that's why Monorepos](#and-thats-why-monorepos)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Why Monorepos?
 
 > A monorepo: A repository that includes multiple javascript packages

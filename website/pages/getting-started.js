@@ -1,7 +1,6 @@
 import React from "react";
-import { Fragment } from "react";
-import GettingStarted from "../../GETTING_STARTED.md";
-import Index, { items } from ".";
+import GettingStarted from '@thinkmill/monorepo-docs/src/getting-started.md';
+import { items } from ".";
 import Article from "../components/article";
 
 export default () => (
