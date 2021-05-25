@@ -15,13 +15,6 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "standard/computed-property-even-spacing": "off",
-    "lines-between-class-members": "off",
-    "no-template-curly-in-string": "off",
-    "camelcase": "off",
-    "import/no-duplicates": "off",
-    "no-useless-constructor": "off",
-    "no-unusued-vars": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   },
