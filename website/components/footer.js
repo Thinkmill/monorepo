@@ -30,10 +30,7 @@ export default () => (
       }}
     >
       <span>
-        Created and maintained by{" "}
-        <span>
-          Thinkmill
-        </span>
+        Created and maintained by <span>Thinkmill</span>
       </span>
     </div>
   </a>

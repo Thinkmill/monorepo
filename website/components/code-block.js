@@ -1,7 +1,7 @@
 import Highlight, { defaultProps } from "prism-react-renderer";
 import { theme } from "./prism-theme";
 
-export const CodeBlock = ({ children, className, ...props }) => {
+export const CodeBlock = ({ children, className }) => {
   const language = className ? className.replace(/language-/, "") : undefined;
   return (
     <Highlight
