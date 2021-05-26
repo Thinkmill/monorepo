@@ -1,5 +1,5 @@
 [build]
-  command = "yarn website:build"
+  command = "yarn predeploy"
   publish = "website/out"
 [build.environment]
   NODE_VERSION = "10"
