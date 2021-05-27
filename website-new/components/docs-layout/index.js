@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex, Link, Text, Box, List, ListItem, useTheme } from "@chakra-ui/react"
+import { Flex, Link, Text, Box, List, ListItem, useTheme, Badge } from "@chakra-ui/react"
 import '../../docs/index.md';
-import { css } from '@emotion/css';
+import { ComingSoonBadge } from '../coming-soon-badge';
 
 const config = [
   {
@@ -17,6 +17,7 @@ const config = [
 ]
 
 const Sidebar = () => {
+
   const { fontSizes, lineHeights, space } = useTheme();
 
   const list1Styles = { fontSize: fontSizes.xs };
@@ -28,15 +29,17 @@ const Sidebar = () => {
   const link1Styles = { color: true ? 'gray.500' : 'gray.900' };
   const link2Styles = { color: true ? 'gray.500' : 'gray.900' };
 
+  const linkDisabledStyles = { cursor: 'initial', opacity: .5, _hover: { textDecoration: 'initial' }};
+
   return (
     <List {...list1Styles}>
-      <ListItem {...list1ItemStyles} marginTop={space[2]}>I want to —
+      <ListItem {...list1ItemStyles} marginTop={space[2]}>I want to — <ComingSoonBadge />
         <List {...list2Styles}>
-          <ListItem {...list2ItemStyles}><Link {...link2Styles}>build an app</Link></ListItem>
-          <ListItem {...list2ItemStyles}><Link {...link2Styles}>build an app with a design system</Link></ListItem>
-          <ListItem {...list2ItemStyles}><Link {...link2Styles}>build an open source library</Link></ListItem>
-          <ListItem {...list2ItemStyles}><Link {...link2Styles}>use packages outside of the monorepo</Link></ListItem>
-          <ListItem {...list2ItemStyles}><Link {...link2Styles}>bring existing packages in to the monorepo</Link></ListItem>
+          <ListItem {...list2ItemStyles}><Link {...link2Styles} {...linkDisabledStyles}>build an app</Link></ListItem>
+          <ListItem {...list2ItemStyles}><Link {...link2Styles} {...linkDisabledStyles}>build an app with a design system</Link></ListItem>
+          <ListItem {...list2ItemStyles}><Link {...link2Styles} {...linkDisabledStyles}>build an open source library</Link></ListItem>
+          <ListItem {...list2ItemStyles}><Link {...link2Styles} {...linkDisabledStyles}>use packages outside of the monorepo</Link></ListItem>
+          <ListItem {...list2ItemStyles}><Link {...link2Styles} {...linkDisabledStyles}>bring existing packages in to the monorepo</Link></ListItem>
         </List>
       </ListItem>
       <ListItem {...list1ItemStyles}><Link {...link1Styles}>Key concepts</Link>
@@ -58,7 +61,7 @@ export const DocsLayout = ({ children }) => {
   const { space } = useTheme();
   return (
     <Flex>
-      <Box w={200} paddingRight={space[4]}>
+      <Box w={220} paddingRight={space[6]}>
         <Sidebar />
       </Box>
       <Box>
