@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'HELLLO ELISE'
+title: 'HELLLO ELISE'
 }
 
 import { Button } from '@chakra-ui/react';

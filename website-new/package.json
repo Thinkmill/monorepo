@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format:docs": "prettier --write \"docs/**/*.md\""
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.2",
