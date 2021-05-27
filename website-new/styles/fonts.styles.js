@@ -27,7 +27,6 @@ export const Fonts = () => (
 		    font-weight: 600;
 		    font-style: normal;
 			}
-
-      `}
+    `}
 	/>
 )

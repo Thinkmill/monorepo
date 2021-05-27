@@ -1,4 +1,6 @@
+import React from 'react';
 import { useRouter } from 'next/router';
+import { DocsLayout } from "../../components/docs-layout";
 
 const ScenarioPage = () => {
 	const router = useRouter();
@@ -8,10 +10,10 @@ const ScenarioPage = () => {
 	const metadata = require('../../docs/scenario/product.md').metadata;
 
 	return (
-		<div>
+		<DocsLayout>
 			<h1>Scenario: {id}</h1>
 			<Page />
-		</div>
+		</DocsLayout>
 	);
 }
 
