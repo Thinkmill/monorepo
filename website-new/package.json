@@ -8,8 +8,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.2",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@mdx-js/loader": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "@next/mdx": "^10.2.3",
+    "@rebass/preset": "^4.0.5",
+    "@theme-ui/presets": "^0.9.0",
+    "framer-motion": "^4",
     "next": "10.2.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "rebass": "^4.0.7",
+    "theme-ui": "^0.9.0"
   }
 }

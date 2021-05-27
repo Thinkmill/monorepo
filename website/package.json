@@ -12,12 +12,12 @@
     "@emotion/core": "^10.0.27",
     "@mdx-js/loader": "^1.5.7",
     "@next/mdx": "^9.2.2",
-    "next": "^9.3.2",
     "next-ga": "^2.3.4",
     "prism-react-renderer": "^1.0.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "theme-ui": "^0.3.1",
+    "next": "10.2.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "theme-ui": "^0.9.0",
     "@thinkmill/monorepo-docs": "0.1.0"
   }
 }
