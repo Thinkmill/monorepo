@@ -12,4 +12,4 @@
 
 ## Set up steps  
 
-[numbered steps that walk through technical set up - this will also identify tooling]
+[recipe of steps that walk through technical set up - this will also identify tooling]

@@ -1,22 +1,22 @@
 import React, { useMemo } from 'react';
 import { DocsLayout } from "../../components/docs-layout";
 import { useRouter } from 'next/router';
-import { scenarioConfig } from '../../docs-route-config';
+import { learnConfig } from '../../docs-route-config';
 
-const ScenarioPage = () => {
+const LearnPage = () => {
 	const { query } = useRouter();
 	const { id } = query;
 
 	const Page = useMemo(() => {
-		const routeConfig = scenarioConfig.items.find(i => i.routeId === id);
+		const routeConfig = learnConfig.items.find(i => i.routeId === id);
 		return require('../../docs/' + routeConfig.page).default;
 	}, [id]);
 
 	return (
-		<DocsLayout title={'Scenario'}>
+		<DocsLayout title={'Learn'}>
 			<Page />
 		</DocsLayout>
-	);
+	)
 }
 
-export default ScenarioPage;
+export default LearnPage;

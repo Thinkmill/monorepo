@@ -7,7 +7,6 @@ import { AppLayout } from '../components/app-layout';
 import { Fonts } from '../styles/fonts.styles';
 import { theme } from '../styles/theme.styles';
 
-
 const MyApp = ({ Component, pageProps }) => {
 	return (
 		<>

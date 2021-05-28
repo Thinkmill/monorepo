@@ -1,18 +1,21 @@
 import React from 'react';
-import { Container, useTheme } from "@chakra-ui/react";
+import { Container, useTheme, Box } from "@chakra-ui/react";
 import { AppHeader } from './app-header';
 
 export const AppLayout = ({ children }) => {
-	const { space } = useTheme();
+	if (process.env.NODE_ENV === 'development') {
+		const theme = useTheme();
+		console.log('[Theme] ', theme);
+	}
 	return (
 		<div style={{ height: '100%' }}>
-			<Container maxW="container.md" p={10}>
-				<div style={{ marginBottom: space[6] }}>
+			<Container sx={{ maxWidth: 'container.md', padding: 10 }}>
+				<Box sx={{ marginBottom: 6 }}>
 					<AppHeader />
-				</div>
-				<div>
+				</Box>
+				<Box>
 					{children}
-				</div>
+				</Box>
 			</Container>
 		</div>
 	)
