@@ -6,14 +6,18 @@
   "private": true,
   "scripts": {
     "website": "yarn workspace @thinkmill/monorepo-website",
+    "website-new": "yarn workspace @thinkmill/monorepo-website-new",
     "docs": "yarn workspace @thinkmill/monorepo-docs",
+    "website-new:dev": "yarn website-new dev",
     "website:build": "yarn website build",
-    "website:start": "yarn docs:format && yarn website start",
+    "website:dev": "yarn docs:format && yarn website dev",
     "docs:format": "yarn docs format",
-    "lint": "yarn eslint . --ext ts,tsx,js"
+    "lint": "yarn eslint . --ext ts,tsx,js",
+    "predeploy": "yarn docs:format && yarn website:build"
   },
   "workspaces": [
     "website",
+    "website-new",
     "docs"
   ],
   "dependencies": {
